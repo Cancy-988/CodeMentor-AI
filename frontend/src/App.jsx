@@ -1,119 +1,185 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
-const starterPrompts = [
-  'Explain React hooks in simple terms.',
-  'Help me debug this JavaScript error.',
-  'Suggest a study plan for learning FastAPI.'
-]
+import { Sidebar } from './components/Sidebar'
+import { CodeEditorPanel } from './components/CodeEditorPanel'
+import { ResponsePanel } from './components/ResponsePanel'
+
+const starterCodeByLanguage = {
+  javascript:
+    'function greet(name) {\n' +
+    '  return `Hello, ${name}!`\n' +
+    '}\n\n' +
+    "console.log(greet('CodeMentor'))",
+  python:
+    'def greet(name):\n' +
+    '    return f"Hello, {name}!"\n\n' +
+    'print(greet("CodeMentor"))',
+  typescript:
+    'type User = {\n' +
+    '  name: string\n' +
+    '}\n\n' +
+    'const greet = (user: User): string => {\n' +
+    '  return `Hello, ${user.name}!`\n' +
+    '}\n\n' +
+    "console.log(greet({ name: 'CodeMentor' }))",
+  jsx:
+    'export default function App() {\n' +
+    '  return <h1>Hello from CodeMentor AI</h1>\n' +
+    '}',
+  java:
+    'public class Main {\n' +
+    '    public static void main(String[] args) {\n' +
+    '        System.out.println("Hello from CodeMentor AI");\n' +
+    '    }\n' +
+    '}'
+}
+
+const responseSeed = {
+  review: 'Submit code to get a structured review from the AI mentor.',
+  fix: 'Use Fix Code to get a cleaner, improved version of your snippet.'
+}
 
 export default function App() {
-  const [message, setMessage] = useState('')
-  const [reply, setReply] = useState('Ask CodeMentor AI a question to get started.')
+  const [language, setLanguage] = useState('javascript')
+  const [code, setCode] = useState(starterCodeByLanguage.javascript)
   const [loading, setLoading] = useState(false)
+  const [response, setResponse] = useState(responseSeed.review)
+  const [mode, setMode] = useState('review')
+  const [fileName, setFileName] = useState('starter.js')
 
-  const handleSubmit = async (event) => {
-    event.preventDefault()
+  const editorLanguage = useMemo(() => {
+    if (language === 'jsx') {
+      return 'javascript'
+    }
 
-    const trimmedMessage = message.trim()
-    if (!trimmedMessage) {
+    return language
+  }, [language])
+
+  const handleLanguageChange = (nextLanguage) => {
+    setLanguage(nextLanguage)
+    setCode(starterCodeByLanguage[nextLanguage] || '')
+    setFileName(defaultFileName(nextLanguage))
+  }
+
+  const handleFileUpload = async (event) => {
+    const file = event.target.files?.[0]
+    if (!file) {
       return
     }
 
+    const uploadedText = await file.text()
+    setCode(uploadedText)
+    setFileName(file.name)
+  }
+
+  const sendToBackend = async (actionLabel, promptPrefix) => {
+    const trimmedCode = code.trim()
+    if (!trimmedCode) {
+      setResponse('Add code to the editor before sending a review request.')
+      return
+    }
+
+    setMode(actionLabel)
     setLoading(true)
-    setReply('Thinking...')
+    setResponse('Analyzing your code...')
 
     try {
-      const response = await fetch('/api/chat', {
+      const responsePayload = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: trimmedMessage })
+        body: JSON.stringify({
+          message: `${promptPrefix}\n\nLanguage: ${language}\nFile: ${fileName}\n\nCode:\n${trimmedCode}`
+        })
       })
 
-      const data = await response.json()
-      setReply(data.reply || 'No response returned from the server.')
+      const data = await responsePayload.json()
+      setResponse(data.reply || 'No response returned from the server.')
     } catch (error) {
-      setReply('Could not reach the backend. Make sure FastAPI is running.')
+      setResponse('Could not reach the backend. Make sure FastAPI is running.')
     } finally {
       setLoading(false)
     }
   }
 
-  const usePrompt = (prompt) => {
-    setMessage(prompt)
-  }
-
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100">
-      <div className="mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-6 py-12">
-        <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-          <section className="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-soft backdrop-blur">
-            <p className="mb-4 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-1 text-sm text-cyan-300">
-              CodeMentor AI
-            </p>
-            <h1 className="max-w-2xl text-4xl font-bold tracking-tight sm:text-6xl">
-              Learn faster with an AI coding mentor built for beginners.
-            </h1>
-            <p className="mt-5 max-w-xl text-lg text-slate-300">
-              This starter connects a React frontend to a FastAPI backend and gives you a clean base for Gemini-powered coaching, debugging help, and code explanations.
-            </p>
+    <main className="min-h-screen bg-[#050816] text-slate-100">
+      <div className="mx-auto flex min-h-screen max-w-[1600px] flex-col lg:flex-row">
+        <Sidebar
+          selectedLanguage={language}
+          onLanguageChange={handleLanguageChange}
+          onUpload={handleFileUpload}
+          fileName={fileName}
+        />
 
-            <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-              <label className="block text-sm font-medium text-slate-300" htmlFor="message">
-                Ask your coding question
-              </label>
-              <textarea
-                id="message"
-                rows="5"
-                className="w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-slate-100 outline-none ring-0 transition focus:border-cyan-400/50"
-                placeholder="Example: Explain closures in JavaScript with a real-world example."
-                value={message}
-                onChange={(event) => setMessage(event.target.value)}
-              />
+        <section className="flex min-h-screen flex-1 flex-col gap-6 p-4 sm:p-6 lg:p-8">
+          <header className="rounded-[28px] border border-white/10 bg-white/5 px-6 py-5 shadow-[0_20px_80px_rgba(2,6,23,0.45)] backdrop-blur">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p className="text-sm font-medium uppercase tracking-[0.28em] text-cyan-300/90">
+                  CodeMentor AI Studio
+                </p>
+                <h1 className="mt-2 text-2xl font-semibold text-white sm:text-3xl">
+                  Review, fix, and understand code with an AI mentor.
+                </h1>
+                <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-400 sm:text-base">
+                  A modern dark SaaS workspace for code review, refactoring, and beginner-friendly explanations.
+                </p>
+              </div>
+
               <div className="flex flex-wrap gap-3">
                 <button
-                  type="submit"
+                  type="button"
+                  onClick={() => sendToBackend('review', 'Review this code and explain the issues clearly.')}
                   disabled={loading}
-                  className="rounded-full bg-cyan-400 px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-70"
+                  className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-5 py-3 text-sm font-semibold text-cyan-100 transition hover:border-cyan-300/60 hover:bg-cyan-400/20 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {loading ? 'Sending...' : 'Get Answer'}
+                  Review Code
                 </button>
                 <button
                   type="button"
-                  onClick={() => setMessage('')}
-                  className="rounded-full border border-white/15 px-5 py-3 font-semibold text-slate-200 transition hover:bg-white/5"
+                  onClick={() => sendToBackend('fix', 'Fix this code and return an improved version.')}
+                  disabled={loading}
+                  className="rounded-full bg-cyan-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  Clear
+                  Fix Code
                 </button>
               </div>
-            </form>
-          </section>
-
-          <aside className="space-y-6 rounded-3xl border border-white/10 bg-slate-900/80 p-8 shadow-soft">
-            <div>
-              <h2 className="text-xl font-semibold">Starter Prompts</h2>
-              <div className="mt-4 space-y-3">
-                {starterPrompts.map((prompt) => (
-                  <button
-                    key={prompt}
-                    type="button"
-                    onClick={() => usePrompt(prompt)}
-                    className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-left text-sm text-slate-200 transition hover:border-cyan-400/30 hover:bg-white/10"
-                  >
-                    {prompt}
-                  </button>
-                ))}
-              </div>
             </div>
+          </header>
 
-            <div>
-              <h2 className="text-xl font-semibold">Latest Reply</h2>
-              <p className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm leading-6 text-slate-300">
-                {reply}
-              </p>
-            </div>
-          </aside>
-        </div>
+          <div className="grid flex-1 gap-6 xl:grid-cols-[1.4fr_0.9fr]">
+            <CodeEditorPanel
+              language={editorLanguage}
+              selectedLanguage={language}
+              code={code}
+              onCodeChange={setCode}
+              onLanguageChange={handleLanguageChange}
+              onReview={() => sendToBackend('review', 'Review this code and explain the issues clearly.')}
+              onFix={() => sendToBackend('fix', 'Fix this code and return an improved version.')}
+            />
+
+            <ResponsePanel
+              response={response}
+              loading={loading}
+              mode={mode}
+              fileName={fileName}
+              language={language}
+            />
+          </div>
+        </section>
       </div>
     </main>
   )
+}
+
+function defaultFileName(selectedLanguage) {
+  const mapping = {
+    javascript: 'starter.js',
+    python: 'starter.py',
+    typescript: 'starter.ts',
+    jsx: 'starter.jsx',
+    java: 'Main.java'
+  }
+
+  return mapping[selectedLanguage] || 'starter.txt'
 }
