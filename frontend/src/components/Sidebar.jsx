@@ -14,7 +14,7 @@ export function Sidebar({ selectedLanguage, onLanguageChange, onUpload, fileName
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300">CodeMentor AI</p>
           <h2 className="mt-3 text-xl font-semibold text-white">Workspace</h2>
           <p className="mt-2 text-sm leading-6 text-slate-400">
-            Upload code, choose a language, and send it to the AI for review or repair.
+            Upload code, choose a language, and send it to the multi-agent review pipeline.
           </p>
         </div>
 
@@ -53,7 +53,7 @@ export function Sidebar({ selectedLanguage, onLanguageChange, onUpload, fileName
             <span className="rounded-full bg-emerald-400/10 px-3 py-1 text-emerald-300">FastAPI</span>
           </div>
           <p className="mt-3 text-sm leading-6 text-slate-300">
-            Gemini responses are sent through the API layer so the frontend stays lightweight and safe.
+            Gemini responses are sent through the API layer so the frontend stays lightweight and easy to follow.
           </p>
         </div>
       </div>

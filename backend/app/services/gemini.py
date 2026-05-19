@@ -87,6 +87,15 @@ def _extract_json_payload(text: str) -> dict[str, Any]:
         raise
 
 
+def generate_gemini_json(prompt: str, fallback_payload: dict[str, Any]) -> dict[str, Any]:
+    raw_response = _generate_gemini_text(prompt)
+
+    try:
+        return _extract_json_payload(raw_response)
+    except json.JSONDecodeError:
+        return fallback_payload
+
+
 def generate_gemini_reply(message: str) -> str:
     prompt = (
         "You are CodeMentor AI, a beginner-friendly coding mentor. "

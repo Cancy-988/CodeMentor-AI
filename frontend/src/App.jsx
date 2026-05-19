@@ -34,17 +34,12 @@ const starterCodeByLanguage = {
     '}'
 }
 
-const responseSeed = {
-  review: 'Submit code to get a structured review from the AI mentor.',
-  fix: 'Use Fix Code to get a cleaner, improved version of your snippet.'
-}
-
 export default function App() {
   const [language, setLanguage] = useState('javascript')
   const [code, setCode] = useState(starterCodeByLanguage.javascript)
   const [loading, setLoading] = useState(false)
-  const [response, setResponse] = useState(responseSeed.review)
-  const [mode, setMode] = useState('review')
+  const [review, setReview] = useState(null)
+  const [error, setError] = useState('')
   const [fileName, setFileName] = useState('starter.js')
 
   const editorLanguage = useMemo(() => {
@@ -59,6 +54,8 @@ export default function App() {
     setLanguage(nextLanguage)
     setCode(starterCodeByLanguage[nextLanguage] || '')
     setFileName(defaultFileName(nextLanguage))
+    setReview(null)
+    setError('')
   }
 
   const handleFileUpload = async (event) => {
@@ -72,30 +69,32 @@ export default function App() {
     setFileName(file.name)
   }
 
-  const sendToBackend = async (actionLabel, promptPrefix) => {
+  const sendToBackend = async () => {
     const trimmedCode = code.trim()
     if (!trimmedCode) {
-      setResponse('Add code to the editor before sending a review request.')
+      setError('Add code to the editor before sending a review request.')
       return
     }
 
-    setMode(actionLabel)
     setLoading(true)
-    setResponse('Analyzing your code...')
+    setError('')
 
     try {
-      const responsePayload = await fetch('/api/chat', {
+      const responsePayload = await fetch('/review-code', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: `${promptPrefix}\n\nLanguage: ${language}\nFile: ${fileName}\n\nCode:\n${trimmedCode}`
-        })
+        body: JSON.stringify({ language, code: trimmedCode })
       })
 
       const data = await responsePayload.json()
-      setResponse(data.reply || 'No response returned from the server.')
+
+      if (!responsePayload.ok) {
+        throw new Error(data?.detail || 'The review request failed.')
+      }
+
+      setReview(data)
     } catch (error) {
-      setResponse('Could not reach the backend. Make sure FastAPI is running.')
+      setError(error instanceof Error ? error.message : 'Could not reach the backend. Make sure FastAPI is running.')
     } finally {
       setLoading(false)
     }
@@ -122,27 +121,8 @@ export default function App() {
                   Review, fix, and understand code with an AI mentor.
                 </h1>
                 <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-400 sm:text-base">
-                  A modern dark SaaS workspace for code review, refactoring, and beginner-friendly explanations.
+                  A clean dark workspace for multi-agent code review, bug detection, and beginner-friendly explanations.
                 </p>
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  onClick={() => sendToBackend('review', 'Review this code and explain the issues clearly.')}
-                  disabled={loading}
-                  className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-5 py-3 text-sm font-semibold text-cyan-100 transition hover:border-cyan-300/60 hover:bg-cyan-400/20 disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  Review Code
-                </button>
-                <button
-                  type="button"
-                  onClick={() => sendToBackend('fix', 'Fix this code and return an improved version.')}
-                  disabled={loading}
-                  className="rounded-full bg-cyan-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  Fix Code
-                </button>
               </div>
             </div>
           </header>
@@ -154,14 +134,14 @@ export default function App() {
               code={code}
               onCodeChange={setCode}
               onLanguageChange={handleLanguageChange}
-              onReview={() => sendToBackend('review', 'Review this code and explain the issues clearly.')}
-              onFix={() => sendToBackend('fix', 'Fix this code and return an improved version.')}
+              onAnalyze={sendToBackend}
+              loading={loading}
             />
 
             <ResponsePanel
-              response={response}
               loading={loading}
-              mode={mode}
+              error={error}
+              review={review}
               fileName={fileName}
               language={language}
             />

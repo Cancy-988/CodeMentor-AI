@@ -102,3 +102,16 @@ GEMINI_MODEL=gemini-1.5-flash
 - `backend/app/schemas/review.py`: defines the request and response shapes for code review.
 - `backend/app/services/gemini.py`: builds Gemini prompts and sends requests to the Gemini API.
 - `backend/app/core/config.py`: stores simple environment-driven settings.
+
+## Multi-Agent Workflow
+
+The code review endpoint now runs a simple pipeline with five agents:
+
+- `backend/app/agents/language_detection.py`: detects the programming language from the code.
+- `backend/app/agents/bug_detection.py`: finds bugs, edge cases, and risky behavior.
+- `backend/app/agents/fix_suggestion.py`: suggests practical fixes and an improved version.
+- `backend/app/agents/complexity_analysis.py`: estimates time and space complexity.
+- `backend/app/agents/explanation.py`: explains the issues in simple beginner-friendly language.
+- `backend/app/agents/workflow.py`: connects all agents and returns one combined JSON response.
+
+The `/review-code` endpoint accepts `code` and `language`, sends them through the workflow, and returns a structured JSON object with all agent results.

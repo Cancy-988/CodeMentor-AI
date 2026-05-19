@@ -14,31 +14,25 @@ export function CodeEditorPanel({
   code,
   onCodeChange,
   onLanguageChange,
-  onReview,
-  onFix
+  onAnalyze,
+  loading
 }) {
   return (
     <section className="flex min-w-0 flex-1 flex-col gap-4 rounded-[28px] border border-white/10 bg-white/5 p-4 shadow-[0_24px_80px_rgba(2,6,23,0.45)] backdrop-blur sm:p-5">
       <div className="flex flex-col gap-4 rounded-3xl border border-white/10 bg-slate-950/60 p-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <h2 className="text-lg font-semibold text-white">Monaco Code Editor</h2>
-          <p className="mt-1 text-sm text-slate-400">Edit code directly in the browser before sending it to the AI.</p>
+          <p className="mt-1 text-sm text-slate-400">Edit code directly in the browser before running the multi-agent review.</p>
         </div>
 
         <div className="flex flex-wrap gap-3">
           <button
             type="button"
-            onClick={onReview}
-            className="rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-cyan-400/30 hover:bg-white/10"
+            onClick={onAnalyze}
+            disabled={loading}
+            className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2.5 text-sm font-semibold text-cyan-100 transition hover:border-cyan-300/60 hover:bg-cyan-400/20 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Review Code
-          </button>
-          <button
-            type="button"
-            onClick={onFix}
-            className="rounded-full bg-cyan-400 px-4 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
-          >
-            Fix Code
+            {loading ? 'Analyzing...' : 'Analyze Code'}
           </button>
         </div>
       </div>
