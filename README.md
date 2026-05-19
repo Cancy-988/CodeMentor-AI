@@ -87,6 +87,18 @@ GEMINI_MODEL=gemini-1.5-flash
 ## How It Works
 
 - The React app shows a simple chat-style interface.
-- The FastAPI backend exposes a health check and a `/api/chat` endpoint.
-- The backend sends your prompt to Gemini and returns the answer.
+- The FastAPI backend exposes a health check, a `/api/chat` endpoint, and a `/review-code` endpoint.
+- The chat endpoint sends a question to Gemini and returns the answer.
+- The review endpoint sends code plus its programming language to Gemini and returns an AI-generated code review.
 - If the Gemini key is missing, the backend returns a clear setup message instead of crashing.
+
+## Backend Files
+
+- `backend/app/main.py`: creates the FastAPI app, enables CORS, and registers routes.
+- `backend/app/api/routes/health.py`: returns a basic health check.
+- `backend/app/api/routes/chat.py`: keeps the original chat endpoint.
+- `backend/app/api/routes/review.py`: handles `POST /review-code`.
+- `backend/app/schemas/chat.py`: defines the request and response shapes for chat.
+- `backend/app/schemas/review.py`: defines the request and response shapes for code review.
+- `backend/app/services/gemini.py`: builds Gemini prompts and sends requests to the Gemini API.
+- `backend/app/core/config.py`: stores simple environment-driven settings.
