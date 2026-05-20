@@ -2,6 +2,8 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
+from app.schemas.validation import ValidationResult
+
 
 class CodeReviewRequest(BaseModel):
     language: str = Field(..., min_length=1, max_length=50)
@@ -52,3 +54,4 @@ class CodeReviewResponse(BaseModel):
     explanation: ExplanationResult
     final_summary: str
     next_steps: list[str]
+    validation: ValidationResult | None = None

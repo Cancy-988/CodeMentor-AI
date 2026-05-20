@@ -3,7 +3,7 @@ from typing import Any
 from app.services.gemini import generate_gemini_json
 
 
-def detect_language(code: str, language_hint: str) -> dict[str, Any]:
+def detect_language(code: str, language_hint: str, retrieved_context: str = "") -> dict[str, Any]:
     fallback_payload = {
         "detected_language": language_hint or "unknown",
         "confidence": "low",
@@ -24,6 +24,9 @@ Rules:
 - Use the code itself to detect the language.
 - Keep the explanation short and beginner friendly.
 - If the code is ambiguous, use the user's language hint: {language_hint}
+
+Relevant retrieved rules and notes:
+{retrieved_context or "No extra rules were retrieved."}
 
 Code:
 {code}

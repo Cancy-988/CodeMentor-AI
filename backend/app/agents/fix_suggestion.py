@@ -3,7 +3,7 @@ from typing import Any
 from app.services.gemini import generate_gemini_json
 
 
-def suggest_fixes(code: str, language: str, bug_summary: str) -> dict[str, Any]:
+def suggest_fixes(code: str, language: str, bug_summary: str, retrieved_context: str = "") -> dict[str, Any]:
     fallback_payload = {
         "recommended_fix": "Review the issues found by the bug detection agent and apply the smallest safe fix first.",
         "alternatives": [],
@@ -27,6 +27,9 @@ Rules:
 - Prefer simple and practical fixes.
 - Keep the explanation beginner friendly.
 - If no fix is needed, explain what is already good.
+
+Relevant retrieved rules and notes:
+{retrieved_context or "No extra rules were retrieved."}
 
 Code:
 {code}

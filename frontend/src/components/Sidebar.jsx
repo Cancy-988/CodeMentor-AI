@@ -1,5 +1,6 @@
 const languageOptions = [
   { value: 'javascript', label: 'JavaScript' },
+  { value: 'cpp', label: 'C++' },
   { value: 'typescript', label: 'TypeScript' },
   { value: 'python', label: 'Python' },
   { value: 'jsx', label: 'React JSX' },
@@ -42,7 +43,7 @@ export function Sidebar({ selectedLanguage, onLanguageChange, onUpload, fileName
           </label>
           <label className="flex cursor-pointer items-center justify-center rounded-2xl border border-dashed border-cyan-400/30 bg-cyan-400/5 px-4 py-4 text-sm font-medium text-cyan-100 transition hover:border-cyan-300/60 hover:bg-cyan-400/10">
             <span>Upload file</span>
-            <input className="hidden" type="file" onChange={onUpload} accept=".js,.jsx,.ts,.tsx,.py,.java,.txt,.md,.json,.css,.html" />
+            <input className="hidden" type="file" onChange={onUpload} accept=".js,.py,.cpp,.java" />
           </label>
           <p className="text-xs text-slate-500">{fileName}</p>
         </div>

@@ -3,7 +3,7 @@ from typing import Any
 from app.services.gemini import generate_gemini_json
 
 
-def analyze_complexity(code: str, language: str) -> dict[str, Any]:
+def analyze_complexity(code: str, language: str, retrieved_context: str = "") -> dict[str, Any]:
     fallback_payload = {
         "time_complexity": "Unknown",
         "space_complexity": "Unknown",
@@ -23,6 +23,9 @@ Analyze the {language} code and return ONLY valid JSON with this shape:
 Rules:
 - Keep the explanation simple.
 - If the exact complexity is unclear, give the most likely answer and explain the assumption.
+
+Relevant retrieved rules and notes:
+{retrieved_context or "No extra rules were retrieved."}
 
 Code:
 {code}

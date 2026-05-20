@@ -3,7 +3,7 @@ from typing import Any
 from app.services.gemini import generate_gemini_json
 
 
-def detect_bugs(code: str, language: str) -> dict[str, Any]:
+def detect_bugs(code: str, language: str, retrieved_context: str = "") -> dict[str, Any]:
     fallback_payload = {
         "summary": "No structured bug analysis could be generated, so a safe fallback is returned.",
         "issues": [],
@@ -29,6 +29,9 @@ Rules:
 - Focus on bugs, edge cases, and unsafe behavior.
 - Explain issues simply.
 - If there are no obvious bugs, return an empty issues array.
+
+Relevant retrieved rules and notes:
+{retrieved_context or "No extra rules were retrieved."}
 
 Code:
 {code}

@@ -2,6 +2,7 @@ import Editor from '@monaco-editor/react'
 
 const editorThemes = {
   javascript: 'vs-dark',
+  cpp: 'vs-dark',
   typescript: 'vs-dark',
   python: 'vs-dark',
   jsx: 'vs-dark',

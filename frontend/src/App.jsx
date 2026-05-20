@@ -10,6 +10,12 @@ const starterCodeByLanguage = {
     '  return `Hello, ${name}!`\n' +
     '}\n\n' +
     "console.log(greet('CodeMentor'))",
+  cpp:
+    '#include <iostream>\n\n' +
+    'int main() {\n' +
+    '    std::cout << "Hello from CodeMentor AI" << std::endl;\n' +
+    '    return 0;\n' +
+    '}',
   python:
     'def greet(name):\n' +
     '    return f"Hello, {name}!"\n\n' +
@@ -50,6 +56,24 @@ export default function App() {
     return language
   }, [language])
 
+  const uploadCodeFile = async (file) => {
+    const formData = new FormData()
+    formData.append('file', file)
+
+    const response = await fetch('/api/upload-code', {
+      method: 'POST',
+      body: formData,
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data?.detail || 'The file upload failed.')
+    }
+
+    return data
+  }
+
   const handleLanguageChange = (nextLanguage) => {
     setLanguage(nextLanguage)
     setCode(starterCodeByLanguage[nextLanguage] || '')
@@ -64,9 +88,20 @@ export default function App() {
       return
     }
 
-    const uploadedText = await file.text()
-    setCode(uploadedText)
-    setFileName(file.name)
+    try {
+      setError('')
+      setLoading(true)
+      const uploadedFile = await uploadCodeFile(file)
+      setCode(uploadedFile.content)
+      setLanguage(uploadedFile.language)
+      setFileName(uploadedFile.filename)
+      setReview(null)
+    } catch (uploadError) {
+      setError(uploadError instanceof Error ? uploadError.message : 'The file upload failed.')
+    } finally {
+      setLoading(false)
+      event.target.value = ''
+    }
   }
 
   const sendToBackend = async () => {
@@ -155,6 +190,7 @@ export default function App() {
 function defaultFileName(selectedLanguage) {
   const mapping = {
     javascript: 'starter.js',
+    cpp: 'starter.cpp',
     python: 'starter.py',
     typescript: 'starter.ts',
     jsx: 'starter.jsx',

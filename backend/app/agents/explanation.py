@@ -3,7 +3,13 @@ from typing import Any
 from app.services.gemini import generate_gemini_json
 
 
-def explain_issues(code: str, language: str, bug_summary: str, fix_summary: str) -> dict[str, Any]:
+def explain_issues(
+    code: str,
+    language: str,
+    bug_summary: str,
+    fix_summary: str,
+    retrieved_context: str = "",
+) -> dict[str, Any]:
     fallback_payload = {
         "simple_explanation": "The code was reviewed, but the explanation could not be generated safely.",
         "key_takeaways": [],
@@ -27,6 +33,9 @@ Context:
 Rules:
 - Avoid jargon where possible.
 - Make it easy for a beginner to understand.
+
+Relevant retrieved rules and notes:
+{retrieved_context or "No extra rules were retrieved."}
 
 Code:
 {code}

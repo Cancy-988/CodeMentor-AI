@@ -30,6 +30,8 @@ const syntaxLanguageMap = {
 }
 
 export function ResponsePanel({ review, loading, error, fileName, language }) {
+  const validation = review?.validation
+
   return (
     <aside className="flex min-w-0 flex-col gap-4 rounded-[28px] border border-white/10 bg-[#08101c] p-4 shadow-[0_24px_80px_rgba(2,6,23,0.45)] sm:p-5">
       <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
@@ -178,6 +180,8 @@ export function ResponsePanel({ review, loading, error, fileName, language }) {
               </div>
             </div>
           </div>
+
+          <ValidationCard validation={validation} />
         </div>
       ) : (
         <div className="rounded-3xl border border-dashed border-white/10 bg-slate-950/60 p-6 text-sm leading-6 text-slate-400">
@@ -220,5 +224,68 @@ function Pill({ children, tone = 'default' }) {
     <span className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold ${toneClasses}`}>
       {children}
     </span>
+  )
+}
+
+function ValidationCard({ validation }) {
+  const statusTone = validation?.passed ? 'bg-emerald-400/10 text-emerald-200 border-emerald-400/20' : 'bg-amber-400/10 text-amber-200 border-amber-400/20'
+  const statusLabel = validation?.passed ? 'Passed' : 'Needs review'
+
+  return (
+    <section className="rounded-3xl border border-white/10 bg-slate-950/70 p-5 xl:col-span-2">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="text-sm font-semibold text-white">Validation Agent</p>
+          <p className="mt-2 text-sm leading-6 text-slate-400">
+            Confirms syntax safety, checks RAG grounding, and flags hallucination risk before you trust the output.
+          </p>
+        </div>
+        <span className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold ${statusTone}`}>
+          {statusLabel}
+        </span>
+      </div>
+
+      {validation ? (
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <ValidationStat label="Syntax" value={validation.syntax_ok ? 'OK' : 'Issue'} tone={validation.syntax_ok ? 'good' : 'warn'} />
+          <ValidationStat label="RAG" value={validation.rag_aligned ? 'Aligned' : 'Weak match'} tone={validation.rag_aligned ? 'good' : 'warn'} />
+          <ValidationStat label="Hallucination" value={validation.hallucination_risk} tone={validation.hallucination_risk === 'low' ? 'good' : 'warn'} />
+          {validation.findings?.length > 0 ? (
+            <div className="sm:col-span-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Findings</p>
+              <div className="mt-3 space-y-2">
+                {validation.findings.map((finding, index) => (
+                  <div key={`${finding.category}-${index}`} className="rounded-2xl border border-white/10 bg-slate-950/60 p-3 text-sm leading-6 text-slate-300">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-semibold text-white">{finding.category}</span>
+                      <Pill tone="muted">{finding.severity}</Pill>
+                    </div>
+                    <p className="mt-2">{finding.message}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
+        </div>
+      ) : (
+        <div className="mt-4 rounded-2xl border border-dashed border-white/10 bg-white/5 p-4 text-sm leading-6 text-slate-400">
+          The validation result will appear here after the backend returns the review payload.
+        </div>
+      )}
+    </section>
+  )
+}
+
+function ValidationStat({ label, value, tone }) {
+  const toneClasses =
+    tone === 'good'
+      ? 'border-emerald-400/20 bg-emerald-400/10 text-emerald-200'
+      : 'border-amber-400/20 bg-amber-400/10 text-amber-200'
+
+  return (
+    <div className={`rounded-2xl border px-4 py-3 ${toneClasses}`}>
+      <p className="text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-inherit/80">{label}</p>
+      <p className="mt-2 text-sm font-semibold text-white">{value}</p>
+    </div>
   )
 }
