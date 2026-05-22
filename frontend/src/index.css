@@ -3,8 +3,17 @@
 @tailwind utilities;
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   scroll-behavior: smooth;
+}
+
+:root {
+  color: #1f2937;
+  background: #fffaf4;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
@@ -13,12 +22,14 @@ html {
 
 body {
   margin: 0;
+  min-width: 320px;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background:
-    radial-gradient(circle at top left, rgba(34, 211, 238, 0.18), transparent 26%),
-    radial-gradient(circle at top right, rgba(14, 165, 233, 0.1), transparent 24%),
-    linear-gradient(180deg, #020617 0%, #07111f 45%, #020617 100%);
-  color: #e2e8f0;
+    radial-gradient(circle at top left, rgba(251, 146, 60, 0.18), transparent 24%),
+    radial-gradient(circle at top right, rgba(249, 115, 22, 0.12), transparent 26%),
+    radial-gradient(circle at bottom center, rgba(245, 158, 11, 0.12), transparent 22%),
+    linear-gradient(180deg, #fffdf9 0%, #fff7ef 48%, #fffaf4 100%);
+  color: #1f2937;
 }
 
 body::before {
@@ -26,15 +37,42 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background-image: linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(251, 146, 60, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(251, 146, 60, 0.045) 1px, transparent 1px);
   background-size: 48px 48px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.35), transparent 90%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent 90%);
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, transparent 40%, rgba(255, 179, 102, 0.18) 100%);
 }
 
 ::selection {
-  background: rgba(34, 211, 238, 0.32);
-  color: white;
+  background: rgba(249, 115, 22, 0.24);
+  color: #111827;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 247, 237, 0.9);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(249, 115, 22, 0.32);
+  border: 2px solid rgba(255, 247, 237, 0.9);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(249, 115, 22, 0.5);
 }
 
 button,
@@ -44,7 +82,122 @@ input {
   font: inherit;
 }
 
+button,
+select,
+input,
+textarea {
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.panel-surface,
+.panel-card {
+  backdrop-filter: blur(18px);
+}
+
+.typing-caret {
+  display: inline-block;
+  margin-left: 2px;
+  animation: caretBlink 1s steps(2, end) infinite;
+  color: rgba(249, 115, 22, 0.95);
+}
+
+.loading-bar {
+  animation: loadingSweep 1.3s ease-in-out infinite;
+}
+
+.skeleton-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  animation: shimmer 1.45s ease-in-out infinite;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes loadingSweep {
+  0% {
+    transform: translateX(-45%);
+    opacity: 0.65;
+  }
+
+  50% {
+    transform: translateX(55%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(145%);
+    opacity: 0.65;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes caretBlink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
