@@ -2,12 +2,14 @@
   "name": "codementor-ai-extension",
   "displayName": "CodeMentor AI",
   "description": "VS Code sidebar webview that analyzes code with the CodeMentor AI FastAPI backend.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "codementor-ai",
+  "icon": "media/icon.svg",
   "engines": {
     "vscode": "^1.85.0"
   },
   "categories": ["Other"],
+  "keywords": ["ai", "code review", "sidebar", "webview", "fastapi"],
   "main": "./extension.js",
   "activationEvents": [
     "onView:codementorAI.sidebar",
@@ -62,6 +64,6 @@
     }
   },
   "scripts": {
-    "check": "node --check extension.js && node --check src/apiService.js && node --check src/webview.js"
+    "check": "node --check extension.js && node --check src/apiService.js && node --check src/webview.js && node --check media/webview-client.js"
   }
 }

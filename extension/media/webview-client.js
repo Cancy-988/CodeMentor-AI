@@ -322,11 +322,11 @@ function render() {
           <span class="tag">${escapeHtml(state.fileName || 'No file')}</span>
         </div>
       </div>
-      <div class="button-row" style="margin-top: 12px;">
+      <div class="section-actions" style="margin-top: 12px;">
         <button class="button primary" data-action="analyze-selected">Analyze Selected Code</button>
         <button class="button" data-action="analyze-current-file">Analyze Current File</button>
       </div>
-      <div class="subtle" style="margin-top: 10px;">${escapeHtml(state.sourceLabel || 'Idle')}</div>
+      <div class="sidebar-note">${escapeHtml(state.sourceLabel || 'Idle')}</div>
     </div>
 
     <div class="panel">

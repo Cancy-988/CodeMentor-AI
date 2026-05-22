@@ -1,0 +1,5 @@
+**/node_modules/**
+**/*.map
+.vscode/**
+.gitignore
+README.md
