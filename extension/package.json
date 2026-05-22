@@ -1,0 +1,67 @@
+{
+  "name": "codementor-ai-extension",
+  "displayName": "CodeMentor AI",
+  "description": "VS Code sidebar webview that analyzes code with the CodeMentor AI FastAPI backend.",
+  "version": "0.1.0",
+  "publisher": "codementor-ai",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onView:codementorAI.sidebar",
+    "onCommand:codementorAI.openSidebar",
+    "onCommand:codementorAI.analyzeSelection",
+    "onCommand:codementorAI.analyzeCurrentFile"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "codementorAI.openSidebar",
+        "title": "CodeMentor AI: Open Sidebar"
+      },
+      {
+        "command": "codementorAI.analyzeSelection",
+        "title": "CodeMentor AI: Analyze with CodeMentor AI",
+        "category": "CodeMentor AI"
+      },
+      {
+        "command": "codementorAI.analyzeCurrentFile",
+        "title": "CodeMentor AI: Analyze Current File",
+        "category": "CodeMentor AI"
+      }
+    ],
+    "configuration": {
+      "title": "CodeMentor AI",
+      "properties": {
+        "codementorAI.backendBaseUrl": {
+          "type": "string",
+          "default": "http://127.0.0.1:8000",
+          "description": "Base URL for the CodeMentor AI FastAPI backend."
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "codementorAI",
+          "title": "CodeMentor AI",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "codementorAI": [
+        {
+          "id": "codementorAI.sidebar",
+          "name": "CodeMentor AI",
+          "type": "webview"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "check": "node --check extension.js && node --check src/apiService.js && node --check src/webview.js"
+  }
+}
