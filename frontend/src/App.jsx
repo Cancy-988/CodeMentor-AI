@@ -9,7 +9,9 @@ import { LandingPage } from './pages/LandingPage'
 import { AboutPage } from './pages/AboutPage'
 import { SignupPage } from './pages/SignupPage'
 import { ProjectsPage } from './pages/ProjectsPage'
+import { ProjectDetailPage } from './pages/ProjectDetailPage'
 import { ReviewsPage } from './pages/ReviewsPage'
+import { ReviewDetailPage } from './pages/ReviewDetailPage'
 import { FixesPage } from './pages/FixesPage'
 import { UploadsPage } from './pages/UploadsPage'
 
@@ -39,12 +41,28 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/projects/:projectId"
+          element={
+            <ProtectedRoute>
+              <ProjectDetailPage />
+            </ProtectedRoute>
+          }
+        />
         {/* Chats feature removed */}
         <Route
           path="/reviews"
           element={
             <ProtectedRoute>
               <ReviewsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reviews/:reviewId"
+          element={
+            <ProtectedRoute>
+              <ReviewDetailPage />
             </ProtectedRoute>
           }
         />

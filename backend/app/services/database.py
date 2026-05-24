@@ -87,6 +87,10 @@ def set_memory(db: Session, *, user_id: int, key: str, value_json: dict) -> Memo
     return memory
 
 
+def get_memory(db: Session, *, user_id: int, key: str):
+    return db.query(MemoryRecord).filter(MemoryRecord.user_id == user_id, MemoryRecord.key == key).one_or_none()
+
+
 def create_project(db: Session, *, user_id: int, name: str, description: str | None = None, language: str | None = None, framework: str | None = None, status: str | None = None):
     from app.db.models import Project
 
@@ -149,6 +153,16 @@ def delete_project(db: Session, *, project_id: int):
     db.delete(project)
     db.flush()
     return True
+
+
+def save_project_workspace(db: Session, *, user_id: int, project_id: int, workspace_json: dict):
+    key = f"project_workspace:{project_id}"
+    return set_memory(db, user_id=user_id, key=key, value_json=workspace_json)
+
+
+def get_project_workspace(db: Session, *, user_id: int, project_id: int):
+    key = f"project_workspace:{project_id}"
+    return get_memory(db, user_id=user_id, key=key)
 
 
 def list_fixes(db: Session, *, user_id: int):

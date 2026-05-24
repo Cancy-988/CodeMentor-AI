@@ -70,23 +70,6 @@ export function SignupPage() {
             : ''
         }
         onSubmit={handleSignup}
-        highlights={[
-          {
-            eyebrow: 'Fast setup',
-            title: 'No extra forms to fill out',
-            description: 'Authentication, account creation, and dashboard access happen in one clean flow.'
-          },
-          {
-            eyebrow: 'Saved progress',
-            title: 'Your review history stays attached',
-            description: 'Projects, uploads, and generated fixes remain connected to your account after signup.'
-          },
-          {
-            eyebrow: 'Production feel',
-            title: 'A polished first impression for users',
-            description: 'The onboarding experience now matches the rest of the product instead of feeling like a placeholder.'
-          }
-        ]}
       />
     </PublicLayout>
   )

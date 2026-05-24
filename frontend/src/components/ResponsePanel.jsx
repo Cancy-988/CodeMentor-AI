@@ -368,10 +368,10 @@ function useTypewriterText(text) {
 function Pill({ children, tone = 'default' }) {
   const toneClasses =
     tone === 'accent'
-      ? 'border-orange-200 bg-orange-50 text-orange-700'
+      ? 'border-orange-400/20 bg-orange-400/10 text-orange-200 dark:text-orange-200'
       : tone === 'muted'
         ? 'border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/55 text-[var(--color-text-secondary)]'
-        : 'border-orange-200 bg-orange-50 text-orange-700'
+        : 'border-orange-400/20 bg-orange-400/10 text-orange-200 dark:text-orange-200'
 
   return (
     <span className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold ${toneClasses}`}>
@@ -406,16 +406,16 @@ function ValidationCard({ validation }) {
           <ValidationStat label="RAG" value={validation.rag_aligned ? 'Aligned' : 'Weak match'} tone={validation.rag_aligned ? 'good' : 'warn'} />
           <ValidationStat label="Hallucination" value={validation.hallucination_risk} tone={validation.hallucination_risk === 'low' ? 'good' : 'warn'} />
           {validation.findings?.length > 0 ? (
-              <div className="sm:col-span-3 rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/50 p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-text-tertiary)]">Findings</p>
+            <div className="sm:col-span-3 rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/50 p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-text-tertiary)]">Findings</p>
               <div className="mt-3 space-y-2">
-                  {validation.findings.map((finding, index) => (
-                    <div key={`${finding.category}-${index}`} className="rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/80 p-3 text-sm leading-6 text-[var(--color-text-secondary)]">
+                {validation.findings.map((finding, index) => (
+                  <div key={`${finding.category}-${index}`} className="rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/80 p-3 text-sm leading-6 text-[var(--color-text-secondary)]">
                     <div className="flex flex-wrap items-center gap-2">
-                        <span className="font-semibold text-[var(--color-text-primary)]">{finding.category}</span>
+                      <span className="font-semibold text-[var(--color-text-primary)]">{finding.category}</span>
                       <Pill tone="muted">{finding.severity}</Pill>
                     </div>
-                    <p className="mt-2">{finding.message}</p>
+                    <p className="mt-2 text-[var(--color-text-secondary)]">{finding.message}</p>
                   </div>
                 ))}
               </div>
@@ -423,7 +423,7 @@ function ValidationCard({ validation }) {
           ) : null}
         </div>
       ) : (
-          <div className="mt-4 rounded-2xl border border-dashed border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/45 p-4 text-sm leading-6 text-[var(--color-text-secondary)]">
+        <div className="mt-4 rounded-2xl border border-dashed border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/45 p-4 text-sm leading-6 text-[var(--color-text-secondary)]">
           The validation result will appear here after the backend returns the review payload.
         </div>
       )}
@@ -434,12 +434,12 @@ function ValidationCard({ validation }) {
 function ValidationStat({ label, value, tone }) {
   const toneClasses =
     tone === 'good'
-      ? 'border-orange-200 bg-orange-50 text-orange-700'
-      : 'border-amber-200 bg-amber-50 text-amber-800'
+      ? 'border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/55 text-[var(--color-text-secondary)]'
+      : 'border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/45 text-[var(--color-text-tertiary)]'
 
   return (
     <div className={`rounded-2xl border px-4 py-3 ${toneClasses}`}>
-      <p className="text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-inherit/80">{label}</p>
+      <p className="text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-[var(--color-text-tertiary)]">{label}</p>
       <p className="mt-2 text-sm font-semibold text-[var(--color-text-primary)]">{value}</p>
     </div>
   )

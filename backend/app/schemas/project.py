@@ -28,3 +28,12 @@ class ProjectResponse(BaseModel):
     status: str | None = None
     created_at: datetime
     updated_at: datetime
+
+
+class ProjectWorkspaceUpsert(BaseModel):
+    workspace_json: dict
+
+
+class ProjectWorkspaceResponse(BaseModel):
+    project: ProjectResponse
+    workspace_json: dict | None = None

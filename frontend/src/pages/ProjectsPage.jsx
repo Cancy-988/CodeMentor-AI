@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Navbar } from '../components/Navbar'
 import { authFetch } from '../lib/apiClient'
 import { readJsonResponse } from '../lib/apiClient'
+import { buildFileTree } from '../lib/workspaceBundle'
 
 const languageOptions = [
   { value: 'javascript', label: 'JavaScript' },
@@ -141,6 +143,58 @@ export function ProjectsPage() {
     return uploadedFiles
   }
 
+  const saveWorkspaceBundle = async (projectId, sourceFiles, uploadedFiles, primaryFile, reviewResult) => {
+    const workspaceFiles = uploadedFiles.map((uploadedFile, index) => {
+      const sourceFile = sourceFiles[index]
+
+      return {
+        path: sourceFile?.webkitRelativePath || sourceFile?.name || uploadedFile.filename,
+        filename: uploadedFile.filename,
+        language: uploadedFile.language,
+        content: uploadedFile.content,
+        file_type: 'code'
+      }
+    })
+
+    const workspaceJson = {
+      project: {
+        name: projectName.trim(),
+        description: description.trim() || null,
+        language: language || null,
+        framework: framework.trim() || null
+      },
+      files: workspaceFiles,
+      file_tree: buildFileTree(workspaceFiles),
+      primary_file: primaryFile
+        ? {
+            path: primaryFile.path || primaryFile.filename,
+            filename: primaryFile.filename,
+            language: primaryFile.language,
+            content: primaryFile.content,
+            file_type: primaryFile.file_type || 'code'
+          }
+        : null,
+      review: reviewResult || null,
+      created_at: new Date().toISOString()
+    }
+
+    const response = await authFetch(`/api/projects/${projectId}/workspace`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ workspace_json: workspaceJson })
+    })
+
+    const data = await readJsonResponse(response)
+
+    if (!response.ok) {
+      throw new Error(data?.detail || 'The project workspace could not be saved.')
+    }
+
+    return data
+  }
+
   const runMultiAgentReview = async (code, reviewLanguage) => {
     const response = await authFetch('/review-code', {
       method: 'POST',
@@ -240,10 +294,12 @@ export function ProjectsPage() {
 
     try {
       let uploadedFile = null
+      let uploadedFiles = []
+      let reviewResult = null
       const filesToUpload = selectedFiles.length > 0 ? selectedFiles : selectedFile && isSupportedProjectFile(selectedFile) ? [selectedFile] : []
 
       if (filesToUpload.length > 0) {
-        const uploadedFiles = await uploadProjectFiles(filesToUpload)
+        uploadedFiles = await uploadProjectFiles(filesToUpload)
         uploadedFile = pickPrimaryFile(uploadedFiles)
 
         if (!projectName.trim()) {
@@ -262,18 +318,27 @@ export function ProjectsPage() {
         throw new Error('Select a folder that contains at least one supported source file.')
       }
 
-      await createProject()
-      await loadProjects()
+      const createdProject = await createProject()
+
+      if (uploadedFiles.length > 0) {
+        await saveWorkspaceBundle(createdProject.id, filesToUpload, uploadedFiles, uploadedFile, null)
+      }
 
       if (uploadedFile) {
         setReviewLoading(true)
         try {
-          const reviewResult = await runMultiAgentReview(uploadedFile.content, uploadedFile.language)
+          reviewResult = await runMultiAgentReview(uploadedFile.content, uploadedFile.language)
           setReview(reviewResult)
         } finally {
           setReviewLoading(false)
         }
       }
+
+      if (uploadedFiles.length > 0) {
+        await saveWorkspaceBundle(createdProject.id, filesToUpload, uploadedFiles, uploadedFile, reviewResult)
+      }
+
+      await loadProjects()
 
       setSelectedFile(null)
       setSelectedFiles([])
@@ -500,22 +565,24 @@ export function ProjectsPage() {
 
           <ul className="mt-6 space-y-4">
             {projects.map((project) => (
-              <li key={project.id} className="rounded-[24px] border border-[var(--color-border-light)] bg-[var(--color-bg-tertiary)]/85 p-5 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
+              <li key={project.id} className="rounded-[24px] border border-[var(--color-border-light)] bg-[var(--color-bg-tertiary)]/85 shadow-[0_18px_60px_rgba(0,0,0,0.2)] transition duration-300 hover:-translate-y-0.5 hover:border-orange-400/30">
+                <Link to={`/projects/${project.id}`} className="block p-5">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div className="space-y-2">
                     <div className="flex flex-wrap items-center gap-2">
-                          <h4 className="text-lg font-semibold text-[var(--color-text-primary)]">{project.name}</h4>
+                      <h4 className="text-lg font-semibold text-[var(--color-text-primary)]">{project.name}</h4>
                       {project.status ? <Badge label={project.status} /> : null}
                     </div>
-                        <p className="text-sm leading-6 text-[var(--color-text-secondary)]">{project.description || 'No description provided.'}</p>
-                        <div className="flex flex-wrap gap-2 pt-1 text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-text-tertiary)]">
+                    <p className="text-sm leading-6 text-[var(--color-text-secondary)]">{project.description || 'No description provided.'}</p>
+                    <div className="flex flex-wrap gap-2 pt-1 text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-text-tertiary)]">
                       {project.language ? <Badge label={project.language} tone="subtle" /> : null}
                       {project.framework ? <Badge label={project.framework} tone="subtle" /> : null}
                     </div>
                   </div>
 
-                      <div className="text-sm text-[var(--color-text-tertiary)]">Updated {new Date(project.updated_at).toLocaleString()}</div>
+                  <div className="text-sm text-[var(--color-text-tertiary)]">Updated {new Date(project.updated_at).toLocaleString()}</div>
                 </div>
+                </Link>
               </li>
             ))}
           </ul>

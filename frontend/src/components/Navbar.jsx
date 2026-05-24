@@ -26,8 +26,6 @@ export function Navbar() {
     { href: '/dashboard', label: 'Workspace' },
     { href: '/projects', label: 'Projects' },
     { href: '/reviews', label: 'Reviews' },
-    { href: '/fixes', label: 'Fixes' },
-    { href: '/uploads', label: 'Uploads' },
   ]
 
   const displayName = useMemo(() => {

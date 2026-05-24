@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Navbar } from '../components/Navbar'
 import { authFetch } from '../lib/apiClient'
 
@@ -61,7 +62,8 @@ export function ReviewsPage() {
 
           <ul className="mt-6 space-y-4">
             {reviews.map((review) => (
-              <li key={review.id} className="rounded-[24px] border border-[var(--color-border-light)] bg-[var(--color-bg-tertiary)]/85 p-5 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
+              <li key={review.id} className="rounded-[24px] border border-[var(--color-border-light)] bg-[var(--color-bg-tertiary)]/85 shadow-[0_18px_60px_rgba(0,0,0,0.2)] transition duration-300 hover:-translate-y-0.5 hover:border-orange-400/30">
+                <Link to={`/reviews/${review.id}`} className="block p-5">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div className="space-y-2">
                     <div className="flex flex-wrap items-center gap-2">
@@ -77,6 +79,7 @@ export function ReviewsPage() {
 
                   <div className="text-sm text-[var(--color-text-tertiary)]">{new Date(review.created_at).toLocaleString()}</div>
                 </div>
+                </Link>
               </li>
             ))}
           </ul>

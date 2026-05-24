@@ -1,22 +1,5 @@
 import { Link } from 'react-router-dom'
 
-const defaultHighlights = [
-  {
-    eyebrow: 'Smart review workflows',
-    title: 'One workspace for review, fixes, and learning',
-    description: 'Move from code upload to bug analysis and improved fixes without bouncing between tools.'
-  },
-  {
-    eyebrow: 'Secure sign-in',
-    title: 'Google OAuth with persistent sessions',
-    description: 'Come back to the same dashboard, saved context, and analysis history on any device.'
-  },
-  {
-    eyebrow: 'Built for developers',
-    title: 'Clear reports instead of noisy AI output',
-    description: 'Read bug findings, complexity insights, and explanations in a format that is easy to act on.'
-  }
-]
 
 export function AuthShell({
   eyebrow,
@@ -35,7 +18,6 @@ export function AuthShell({
   error = '',
   warning = '',
   onSubmit,
-  highlights = defaultHighlights,
 }) {
   return (
     <main className="relative overflow-hidden px-4 py-12 sm:px-6 lg:px-8">
@@ -60,18 +42,6 @@ export function AuthShell({
             </p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-3">
-            {highlights.map((item) => (
-              <article
-                key={item.title}
-                className="rounded-[28px] border border-[var(--color-border-light)] bg-[var(--color-bg-secondary)]/75 p-5 shadow-[0_20px_70px_rgba(15,23,42,0.16)] backdrop-blur-xl"
-              >
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-orange-400">{item.eyebrow}</p>
-                <h2 className="mt-3 text-base font-semibold text-[var(--color-text-primary)]">{item.title}</h2>
-                <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">{item.description}</p>
-              </article>
-            ))}
-          </div>
         </section>
 
         <section className="lg:pl-8">
