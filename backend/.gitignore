@@ -36,6 +36,7 @@ env/
 *.db
 *.sqlite
 *.sqlite3
+codementor_ai.sqlite3
 
 # Environment variables
 .env
