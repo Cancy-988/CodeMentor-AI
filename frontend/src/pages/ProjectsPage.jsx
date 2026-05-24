@@ -326,7 +326,7 @@ export function ProjectsPage() {
         <section className="animate-[fadeInUp_0.75s_ease-out] rounded-[32px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)]/88 p-4 shadow-[0_30px_100px_rgba(0,0,0,0.2)] backdrop-blur-xl sm:p-6">
           <div className="rounded-[28px] border border-[var(--color-border-light)] bg-[var(--color-bg-tertiary)]/80 p-6 sm:p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-300">New Project</p>
-              <h2 className="mt-3 text-2xl font-semibold text-[var(--color-text-primary)]">Create and upload</h2>
+            <h2 className="mt-3 text-2xl font-semibold text-[var(--color-text-primary)]">Create and upload</h2>
             <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">
               Upload a project folder, fill in the details, and save it as a project.
             </p>
@@ -353,7 +353,7 @@ export function ProjectsPage() {
                   value={projectName}
                   onChange={(event) => setProjectName(event.target.value)}
                   placeholder="My first review project"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-100 outline-none transition duration-300 placeholder:text-slate-500 focus:border-orange-400 focus:ring-2 focus:ring-orange-200/40"
+                  className="w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-primary)]/85 px-4 py-3 text-sm text-[var(--color-text-primary)] outline-none transition duration-300 placeholder:text-[var(--color-text-tertiary)] focus:border-orange-400 focus:ring-2 focus:ring-orange-200/40"
                 />
               </div>
 
@@ -367,7 +367,7 @@ export function ProjectsPage() {
                   value={description}
                   onChange={(event) => setDescription(event.target.value)}
                   placeholder="Short note about what the project contains"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-100 outline-none transition duration-300 placeholder:text-slate-500 focus:border-orange-400 focus:ring-2 focus:ring-orange-200/40"
+                  className="w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-primary)]/85 px-4 py-3 text-sm text-[var(--color-text-primary)] outline-none transition duration-300 placeholder:text-[var(--color-text-tertiary)] focus:border-orange-400 focus:ring-2 focus:ring-orange-200/40"
                 />
               </div>
 
@@ -380,10 +380,10 @@ export function ProjectsPage() {
                     id="project-language"
                     value={language}
                     onChange={(event) => setLanguage(event.target.value)}
-                    className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-100 outline-none transition duration-300 focus:border-orange-400 focus:ring-2 focus:ring-orange-200/40"
+                    className="w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-primary)]/85 px-4 py-3 text-sm font-semibold text-[var(--color-text-primary)] outline-none transition duration-300 focus:border-orange-400 focus:ring-2 focus:ring-orange-200/40"
                   >
                     {languageOptions.map((option) => (
-                      <option key={option.value} value={option.value} className="bg-[#0d1222] text-slate-100">
+                      <option key={option.value} value={option.value} className="bg-[var(--color-bg-secondary)] text-[var(--color-text-primary)]">
                         {option.label}
                       </option>
                     ))}
@@ -399,16 +399,16 @@ export function ProjectsPage() {
                     value={framework}
                     onChange={(event) => setFramework(event.target.value)}
                     placeholder="React, FastAPI, Django"
-                    className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-100 outline-none transition duration-300 placeholder:text-slate-500 focus:border-orange-400 focus:ring-2 focus:ring-orange-200/40"
+                    className="w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-primary)]/85 px-4 py-3 text-sm text-[var(--color-text-primary)] outline-none transition duration-300 placeholder:text-[var(--color-text-tertiary)] focus:border-orange-400 focus:ring-2 focus:ring-orange-200/40"
                   />
                 </div>
               </div>
 
               <div className="space-y-3">
                 <label className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-text-secondary)]">Upload project folder</label>
-                <label className="flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-dashed border-orange-300/40 bg-gradient-to-r from-orange-500/10 to-amber-400/10 px-4 py-4 text-sm font-medium text-orange-100 transition duration-300 hover:-translate-y-0.5 hover:border-orange-300 hover:from-orange-500/15 hover:to-amber-400/15">
-                  <span>{selectionLabel}</span>
-                  <span className="rounded-full border border-orange-300/30 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-orange-200">
+                <label className="flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-primary)]/85 px-4 py-4 text-sm font-semibold text-[var(--color-text-primary)] transition duration-300 hover:-translate-y-0.5 hover:border-orange-400/40 hover:bg-[var(--color-bg-tertiary)]/90">
+                  <span className="truncate">{selectionLabel}</span>
+                  <span className="rounded-full border border-orange-300/30 bg-orange-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-orange-700 dark:text-orange-200">
                     Browse folder
                   </span>
                   <input className="hidden" type="file" accept=".js,.py,.cpp,.java" multiple webkitdirectory="true" onChange={handleUploadChange} />
@@ -439,7 +439,7 @@ export function ProjectsPage() {
             ) : null}
 
             {!reviewLoading && review ? (
-              <div className="mt-6 space-y-4 rounded-[28px] border border-white/10 bg-white/5 p-5">
+              <div className="mt-6 space-y-4 rounded-[28px] border border-[var(--color-border-light)] bg-[var(--color-bg-secondary)]/85 p-5">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-300">Multi-agent review</p>
@@ -450,8 +450,8 @@ export function ProjectsPage() {
                   </span>
                 </div>
 
-                <div className="overflow-hidden rounded-[24px] border border-white/10 bg-[#0d1222]">
-                  <div className="flex items-end gap-2 overflow-x-auto border-b border-white/10 bg-white/5 px-3 pt-3">
+                <div className="overflow-hidden rounded-[24px] border border-[var(--color-border-light)] bg-[var(--color-bg-tertiary)]/85">
+                  <div className="flex items-end gap-2 overflow-x-auto border-b border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/55 px-3 pt-3">
                     {reviewTabs.map((tab) => (
                       <ReviewTabButton
                         key={tab.value}
@@ -486,7 +486,7 @@ export function ProjectsPage() {
           </div>
 
           {loading ? (
-            <div className="mt-6 rounded-[24px] border border-[var(--color-border-light)] bg-[#0d1222] px-5 py-6 text-sm text-slate-300">
+            <div className="mt-6 rounded-[24px] border border-[var(--color-border-light)] bg-[var(--color-bg-tertiary)]/85 px-5 py-6 text-sm text-[var(--color-text-secondary)]">
               Loading projects...
             </div>
           ) : null}
@@ -500,21 +500,21 @@ export function ProjectsPage() {
 
           <ul className="mt-6 space-y-4">
             {projects.map((project) => (
-              <li key={project.id} className="rounded-[24px] border border-[var(--color-border-light)] bg-[#0d1222] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
+              <li key={project.id} className="rounded-[24px] border border-[var(--color-border-light)] bg-[var(--color-bg-tertiary)]/85 p-5 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div className="space-y-2">
                     <div className="flex flex-wrap items-center gap-2">
-                      <h4 className="text-lg font-semibold text-white">{project.name}</h4>
+                          <h4 className="text-lg font-semibold text-[var(--color-text-primary)]">{project.name}</h4>
                       {project.status ? <Badge label={project.status} /> : null}
                     </div>
-                    <p className="text-sm leading-6 text-slate-300">{project.description || 'No description provided.'}</p>
-                    <div className="flex flex-wrap gap-2 pt-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-400">
+                        <p className="text-sm leading-6 text-[var(--color-text-secondary)]">{project.description || 'No description provided.'}</p>
+                        <div className="flex flex-wrap gap-2 pt-1 text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-text-tertiary)]">
                       {project.language ? <Badge label={project.language} tone="subtle" /> : null}
                       {project.framework ? <Badge label={project.framework} tone="subtle" /> : null}
                     </div>
                   </div>
 
-                  <div className="text-sm text-slate-400">Updated {new Date(project.updated_at).toLocaleString()}</div>
+                      <div className="text-sm text-[var(--color-text-tertiary)]">Updated {new Date(project.updated_at).toLocaleString()}</div>
                 </div>
               </li>
             ))}
@@ -536,9 +536,9 @@ function FeatureCard({ title, description }) {
 
 function EmptyStateCard({ title, description }) {
   return (
-    <div className="rounded-[24px] border border-white/10 bg-[#0d1222] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
-      <p className="text-sm font-semibold text-white">{title}</p>
-      <p className="mt-2 text-sm leading-6 text-slate-300">{description}</p>
+    <div className="rounded-[24px] border border-[var(--color-border-light)] bg-[var(--color-bg-tertiary)]/85 p-5 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
+      <p className="text-sm font-semibold text-[var(--color-text-primary)]">{title}</p>
+      <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">{description}</p>
     </div>
   )
 }
@@ -546,7 +546,7 @@ function EmptyStateCard({ title, description }) {
 function Badge({ label, tone = 'default' }) {
   const toneClasses =
     tone === 'subtle'
-      ? 'border-white/10 bg-white/5 text-slate-200'
+      ? 'border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/55 text-[var(--color-text-secondary)]'
       : 'border-orange-400/20 bg-orange-400/10 text-orange-200'
 
   return <span className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] ${toneClasses}`}>{label}</span>
@@ -559,8 +559,8 @@ function ReviewTabButton({ label, active, onClick }) {
       onClick={onClick}
       className={`shrink-0 border px-4 py-2 text-sm font-semibold transition duration-300 ${
         active
-          ? 'rounded-t-2xl border-white/10 border-b-[#0d1222] bg-[#0d1222] text-orange-200 shadow-[0_-8px_20px_rgba(0,0,0,0.2)]'
-          : 'rounded-t-2xl rounded-b-none border-white/10 border-b-transparent bg-white/5 text-slate-300 hover:-translate-y-0.5 hover:border-orange-300/40 hover:bg-white/10 hover:text-orange-200'
+          ? 'rounded-t-2xl border-[var(--color-border-light)] border-b-[var(--color-bg-tertiary)] bg-[var(--color-bg-tertiary)] text-orange-200 shadow-[0_-8px_20px_rgba(0,0,0,0.2)]'
+          : 'rounded-t-2xl rounded-b-none border-[var(--color-border-light)] border-b-transparent bg-[var(--color-bg-primary)]/65 text-[var(--color-text-secondary)] hover:-translate-y-0.5 hover:border-orange-300/40 hover:bg-[var(--color-bg-primary)]/80 hover:text-orange-200'
       }`}
     >
       {label}
@@ -578,7 +578,7 @@ function ReviewAgentPanel({ review, activeTab }) {
               <Badge label={review.language_detection.detected_language} tone="subtle" />
               <Badge label={`Confidence: ${review.language_detection.confidence}`} tone="subtle" />
             </div>
-            <p className="text-sm leading-6 text-slate-300">{review.language_detection.explanation}</p>
+            <p className="text-sm leading-6 text-[var(--color-text-secondary)]">{review.language_detection.explanation}</p>
           </div>
         </AgentSection>
       )
@@ -587,21 +587,21 @@ function ReviewAgentPanel({ review, activeTab }) {
       return (
         <AgentSection title="Bug Detection" accent="text-amber-300">
           <div className="space-y-4">
-            <p className="text-sm leading-6 text-slate-300">{review.bug_detection.summary}</p>
+            <p className="text-sm leading-6 text-[var(--color-text-secondary)]">{review.bug_detection.summary}</p>
             <div className="space-y-3">
               {review.bug_detection.issues?.length > 0 ? (
                 review.bug_detection.issues.map((issue) => (
-                  <div key={issue.title} className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <div key={issue.title} className="rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/55 p-4">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-sm font-semibold text-white">{issue.title}</span>
+                      <span className="text-sm font-semibold text-[var(--color-text-primary)]">{issue.title}</span>
                       <Badge label={issue.severity} tone="subtle" />
                     </div>
-                    <p className="mt-2 text-sm leading-6 text-slate-300">{issue.explanation}</p>
+                    <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">{issue.explanation}</p>
                     <p className="mt-2 text-sm leading-6 text-orange-200">Fix: {issue.fix}</p>
                   </div>
                 ))
               ) : (
-                <p className="text-sm leading-6 text-slate-400">No obvious bugs were detected.</p>
+                <p className="text-sm leading-6 text-[var(--color-text-tertiary)]">No obvious bugs were detected.</p>
               )}
             </div>
           </div>
@@ -612,7 +612,7 @@ function ReviewAgentPanel({ review, activeTab }) {
       return (
         <AgentSection title="Fix Suggestion" accent="text-orange-300">
           <div className="space-y-4">
-            <p className="text-sm leading-6 text-slate-300">{review.fix_suggestion.recommended_fix}</p>
+            <p className="text-sm leading-6 text-[var(--color-text-secondary)]">{review.fix_suggestion.recommended_fix}</p>
             <div className="flex flex-wrap gap-2">
               {review.fix_suggestion.alternatives?.length > 0 ? (
                 review.fix_suggestion.alternatives.map((alternative) => (
@@ -623,7 +623,7 @@ function ReviewAgentPanel({ review, activeTab }) {
               )}
             </div>
             {review.fix_suggestion.improved_code ? (
-              <pre className="overflow-x-auto rounded-2xl border border-white/10 bg-black/30 p-4 text-xs leading-6 text-slate-200">
+              <pre className="overflow-x-auto rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/80 p-4 text-xs leading-6 text-[var(--color-text-primary)]">
                 {review.fix_suggestion.improved_code}
               </pre>
             ) : null}
@@ -639,7 +639,7 @@ function ReviewAgentPanel({ review, activeTab }) {
               <Badge label={review.complexity_analysis.time_complexity} tone="subtle" />
               <Badge label={review.complexity_analysis.space_complexity} tone="subtle" />
             </div>
-            <p className="text-sm leading-6 text-slate-300">{review.complexity_analysis.explanation}</p>
+            <p className="text-sm leading-6 text-[var(--color-text-secondary)]">{review.complexity_analysis.explanation}</p>
           </div>
         </AgentSection>
       )
@@ -648,7 +648,7 @@ function ReviewAgentPanel({ review, activeTab }) {
       return (
         <AgentSection title="Explanation" accent="text-orange-300">
           <div className="space-y-4">
-            <p className="text-sm leading-6 text-slate-300">{review.explanation.simple_explanation}</p>
+            <p className="text-sm leading-6 text-[var(--color-text-secondary)]">{review.explanation.simple_explanation}</p>
             <div className="flex flex-wrap gap-2">
               {review.explanation.key_takeaways?.length > 0 ? (
                 review.explanation.key_takeaways.map((takeaway) => (
@@ -676,17 +676,17 @@ function ReviewAgentPanel({ review, activeTab }) {
             {review.validation?.findings?.length > 0 ? (
               <div className="space-y-3">
                 {review.validation.findings.map((finding, index) => (
-                  <div key={`${finding.category}-${index}`} className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <div key={`${finding.category}-${index}`} className="rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/55 p-4">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-sm font-semibold text-white">{finding.category}</span>
+                      <span className="text-sm font-semibold text-[var(--color-text-primary)]">{finding.category}</span>
                       <Badge label={finding.severity} tone="subtle" />
                     </div>
-                    <p className="mt-2 text-sm leading-6 text-slate-300">{finding.message}</p>
+                    <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">{finding.message}</p>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-sm leading-6 text-slate-400">No validation findings were reported.</p>
+              <p className="text-sm leading-6 text-[var(--color-text-tertiary)]">No validation findings were reported.</p>
             )}
           </div>
         </AgentSection>
@@ -695,25 +695,25 @@ function ReviewAgentPanel({ review, activeTab }) {
     default:
       return (
         <div className="space-y-4">
-          <div className="rounded-2xl border border-white/10 bg-[#0d1222] p-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Summary</p>
-            <p className="mt-2 text-sm leading-6 text-slate-200">{review.final_summary}</p>
+          <div className="rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/55 p-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-text-tertiary)]">Summary</p>
+            <p className="mt-2 text-sm leading-6 text-[var(--color-text-primary)]">{review.final_summary}</p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-2xl border border-white/10 bg-[#0d1222] p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Bug detection</p>
-              <p className="mt-2 text-sm leading-6 text-slate-300">{review.bug_detection.summary}</p>
+            <div className="rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/55 p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-text-tertiary)]">Bug detection</p>
+              <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">{review.bug_detection.summary}</p>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-[#0d1222] p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Fix suggestion</p>
-              <p className="mt-2 text-sm leading-6 text-slate-300">{review.fix_suggestion.recommended_fix}</p>
+            <div className="rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/55 p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-text-tertiary)]">Fix suggestion</p>
+              <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">{review.fix_suggestion.recommended_fix}</p>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-[#0d1222] p-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Next steps</p>
+          <div className="rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/55 p-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-text-tertiary)]">Next steps</p>
             <div className="mt-3 flex flex-wrap gap-2">
               {review.next_steps?.map((step) => (
                 <Badge key={step} label={step} tone="subtle" />
@@ -727,11 +727,11 @@ function ReviewAgentPanel({ review, activeTab }) {
 
 function AgentSection({ title, accent, children }) {
   return (
-    <section className="rounded-[24px] border border-white/10 bg-white/5 p-4 shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
+    <section className="rounded-[24px] border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/55 p-4 shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
       <div className="flex items-start justify-between gap-3">
         <div>
           <h4 className={`text-sm font-semibold uppercase tracking-[0.18em] ${accent}`}>{title}</h4>
-          <p className="mt-1 text-xs font-medium uppercase tracking-[0.2em] text-slate-400">Agent result</p>
+          <p className="mt-1 text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">Agent result</p>
         </div>
       </div>
 

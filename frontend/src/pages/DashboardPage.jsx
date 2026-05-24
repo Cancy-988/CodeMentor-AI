@@ -399,9 +399,9 @@ function downloadTextFile(fileName, content) {
 
 function ToastCard({ toast, onDismiss }) {
   const toneClasses = {
-    success: 'border-emerald-300/20 bg-slate-950/95 text-white',
-    error: 'border-rose-300/20 bg-slate-950/95 text-white',
-    info: 'border-cyan-300/20 bg-slate-950/95 text-white'
+    success: 'border-emerald-300/20 bg-[var(--color-bg-tertiary)]/95 text-[var(--color-text-primary)]',
+    error: 'border-rose-300/20 bg-[var(--color-bg-tertiary)]/95 text-[var(--color-text-primary)]',
+    info: 'border-cyan-300/20 bg-[var(--color-bg-tertiary)]/95 text-[var(--color-text-primary)]'
   }
 
   const toneLabel = {
@@ -418,14 +418,14 @@ function ToastCard({ toast, onDismiss }) {
     >
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-slate-300">{toneLabel[toast.tone]}</p>
-          <p className="mt-1 text-sm font-semibold text-white">{toast.title}</p>
-          {toast.description ? <p className="mt-1 text-sm leading-6 text-slate-200">{toast.description}</p> : null}
+          <p className="text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-[var(--color-text-tertiary)]">{toneLabel[toast.tone]}</p>
+          <p className="mt-1 text-sm font-semibold text-[var(--color-text-primary)]">{toast.title}</p>
+          {toast.description ? <p className="mt-1 text-sm leading-6 text-[var(--color-text-secondary)]">{toast.description}</p> : null}
         </div>
         <button
           type="button"
           onClick={() => onDismiss(toast.id)}
-          className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-xs font-semibold text-white transition hover:bg-white/10"
+          className="rounded-full border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/55 px-2 py-1 text-xs font-semibold text-[var(--color-text-primary)] transition hover:bg-[var(--color-bg-primary)]/75"
         >
           Dismiss
         </button>

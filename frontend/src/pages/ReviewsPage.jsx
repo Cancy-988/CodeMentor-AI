@@ -48,7 +48,7 @@ export function ReviewsPage() {
           </div>
 
           {loading ? (
-            <div className="mt-6 rounded-[24px] border border-[var(--color-border-light)] bg-[#0d1222] px-5 py-6 text-sm text-slate-300">
+            <div className="mt-6 rounded-[24px] border border-[var(--color-border-light)] bg-[var(--color-bg-tertiary)]/85 px-5 py-6 text-sm text-[var(--color-text-secondary)]">
               Loading reviews...
             </div>
           ) : null}
@@ -61,21 +61,21 @@ export function ReviewsPage() {
 
           <ul className="mt-6 space-y-4">
             {reviews.map((review) => (
-              <li key={review.id} className="rounded-[24px] border border-[var(--color-border-light)] bg-[#0d1222] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
+              <li key={review.id} className="rounded-[24px] border border-[var(--color-border-light)] bg-[var(--color-bg-tertiary)]/85 p-5 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div className="space-y-2">
                     <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="text-lg font-semibold text-white">Review #{review.id}</h3>
+                      <h3 className="text-lg font-semibold text-[var(--color-text-primary)]">Review #{review.id}</h3>
                       <span className="rounded-full border border-orange-400/20 bg-orange-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-orange-200">
                         {review.language}
                       </span>
                     </div>
-                    <p className="text-sm leading-6 text-slate-300">
+                    <p className="text-sm leading-6 text-[var(--color-text-secondary)]">
                       {review.summary || review.result_json?.final_summary || 'Multi-agent review result saved from the workspace.'}
                     </p>
                   </div>
 
-                  <div className="text-sm text-slate-400">{new Date(review.created_at).toLocaleString()}</div>
+                  <div className="text-sm text-[var(--color-text-tertiary)]">{new Date(review.created_at).toLocaleString()}</div>
                 </div>
               </li>
             ))}

@@ -15,11 +15,11 @@ SyntaxHighlighter.registerLanguage('jsx', jsx)
 SyntaxHighlighter.registerLanguage('java', java)
 
 const agentMeta = {
-  language_detection: { label: 'Language Detection', icon: '<>', accent: 'text-orange-600', border: 'border-orange-200', chip: 'bg-orange-50 text-orange-700' },
-  bug_detection: { label: 'Bug Detection', icon: '!', accent: 'text-amber-700', border: 'border-amber-200', chip: 'bg-amber-50 text-amber-800' },
-  fix_suggestion: { label: 'Fix Suggestion', icon: '✓', accent: 'text-orange-600', border: 'border-orange-200', chip: 'bg-orange-50 text-orange-700' },
-  complexity_analysis: { label: 'Complexity Analysis', icon: '≈', accent: 'text-amber-700', border: 'border-amber-200', chip: 'bg-amber-50 text-amber-800' },
-  explanation: { label: 'Explanation', icon: 'i', accent: 'text-orange-600', border: 'border-orange-200', chip: 'bg-orange-50 text-orange-700' }
+  language_detection: { label: 'Language Detection', icon: '<>', accent: 'text-orange-300', border: 'border-[var(--color-border-light)]', chip: 'bg-[var(--color-bg-primary)]/60 text-[var(--color-text-secondary)]' },
+  bug_detection: { label: 'Bug Detection', icon: '!', accent: 'text-amber-300', border: 'border-[var(--color-border-light)]', chip: 'bg-[var(--color-bg-primary)]/60 text-[var(--color-text-secondary)]' },
+  fix_suggestion: { label: 'Fix Suggestion', icon: '✓', accent: 'text-orange-300', border: 'border-[var(--color-border-light)]', chip: 'bg-[var(--color-bg-primary)]/60 text-[var(--color-text-secondary)]' },
+  complexity_analysis: { label: 'Complexity Analysis', icon: '≈', accent: 'text-amber-300', border: 'border-[var(--color-border-light)]', chip: 'bg-[var(--color-bg-primary)]/60 text-[var(--color-text-secondary)]' },
+  explanation: { label: 'Explanation', icon: 'i', accent: 'text-orange-300', border: 'border-[var(--color-border-light)]', chip: 'bg-[var(--color-bg-primary)]/60 text-[var(--color-text-secondary)]' }
 }
 
 const syntaxLanguageMap = {
@@ -139,10 +139,10 @@ function ReviewDashboard({ review, activeTab, language, onCopyCode, typedSummary
                 review.bug_detection.issues.map((issue) => (
                   <div key={issue.title} className="rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/55 p-4">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-sm font-semibold text-white">{issue.title}</span>
+                      <span className="text-sm font-semibold text-[var(--color-text-primary)]">{issue.title}</span>
                       <Pill tone="muted">{issue.severity}</Pill>
                     </div>
-                    <p className="mt-2 text-sm leading-6 text-slate-300">{issue.explanation}</p>
+                    <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">{issue.explanation}</p>
                     <p className="mt-2 text-sm leading-6 text-orange-200">Fix: {issue.fix}</p>
                   </div>
                 ))
@@ -171,7 +171,7 @@ function ReviewDashboard({ review, activeTab, language, onCopyCode, typedSummary
               )}
             </div>
             {review.fix_suggestion.improved_code ? (
-              <div className="overflow-hidden rounded-2xl border border-[var(--color-border-light)] bg-[#0b1220]">
+              <div className="overflow-hidden rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/70">
                 <div className="flex items-center justify-between gap-3 border-b border-[var(--color-border-light)] px-4 py-3">
                   <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-text-tertiary)]">Improved code</p>
                   <button
@@ -185,7 +185,7 @@ function ReviewDashboard({ review, activeTab, language, onCopyCode, typedSummary
                 <SyntaxHighlighter
                   language={syntaxLanguageMap[language] || 'javascript'}
                   style={oneLight}
-                  customStyle={{ margin: 0, background: '#0b1220', color: '#e2e8f0', fontSize: '0.84rem', lineHeight: 1.65, padding: '1rem' }}
+                  customStyle={{ margin: 0, background: 'var(--color-bg-primary)', color: 'var(--color-text-primary)', fontSize: '0.84rem', lineHeight: 1.65, padding: '1rem' }}
                   showLineNumbers={false}
                   wrapLongLines
                 >
@@ -240,7 +240,7 @@ function ReviewDashboard({ review, activeTab, language, onCopyCode, typedSummary
           <div className="rounded-3xl border border-[var(--color-border-light)] bg-gradient-to-br from-orange-500/10 to-white/5 p-5 shadow-[0_10px_30px_rgba(0,0,0,0.18)]">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
-                <p className="text-sm font-semibold text-white">Final summary</p>
+                <p className="text-sm font-semibold text-[var(--color-text-primary)]">Final summary</p>
                 <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">
                   {typedSummary}
                   {typedSummary && typedSummary !== review.final_summary ? <span className="typing-caret">|</span> : null}
@@ -370,7 +370,7 @@ function Pill({ children, tone = 'default' }) {
     tone === 'accent'
       ? 'border-orange-200 bg-orange-50 text-orange-700'
       : tone === 'muted'
-        ? 'border-orange-100 bg-orange-50/60 text-slate-600'
+        ? 'border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/55 text-[var(--color-text-secondary)]'
         : 'border-orange-200 bg-orange-50 text-orange-700'
 
   return (
@@ -381,7 +381,9 @@ function Pill({ children, tone = 'default' }) {
 }
 
 function ValidationCard({ validation }) {
-  const statusTone = validation?.passed ? 'bg-orange-50 text-orange-700 border-orange-200' : 'bg-amber-50 text-amber-800 border-amber-200'
+  const statusTone = validation?.passed
+    ? 'bg-[var(--color-bg-primary)]/55 text-[var(--color-text-secondary)] border-[var(--color-border-light)]'
+    : 'bg-[var(--color-bg-primary)]/45 text-[var(--color-text-tertiary)] border-[var(--color-border-light)]'
   const statusLabel = validation?.passed ? 'Passed' : 'Needs review'
 
   return (
@@ -404,13 +406,13 @@ function ValidationCard({ validation }) {
           <ValidationStat label="RAG" value={validation.rag_aligned ? 'Aligned' : 'Weak match'} tone={validation.rag_aligned ? 'good' : 'warn'} />
           <ValidationStat label="Hallucination" value={validation.hallucination_risk} tone={validation.hallucination_risk === 'low' ? 'good' : 'warn'} />
           {validation.findings?.length > 0 ? (
-            <div className="sm:col-span-3 rounded-2xl border border-orange-100 bg-orange-50/50 p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Findings</p>
+              <div className="sm:col-span-3 rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/50 p-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-text-tertiary)]">Findings</p>
               <div className="mt-3 space-y-2">
-                {validation.findings.map((finding, index) => (
-                  <div key={`${finding.category}-${index}`} className="rounded-2xl border border-orange-100 bg-white p-3 text-sm leading-6 text-slate-700">
+                  {validation.findings.map((finding, index) => (
+                    <div key={`${finding.category}-${index}`} className="rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/80 p-3 text-sm leading-6 text-[var(--color-text-secondary)]">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-semibold text-slate-900">{finding.category}</span>
+                        <span className="font-semibold text-[var(--color-text-primary)]">{finding.category}</span>
                       <Pill tone="muted">{finding.severity}</Pill>
                     </div>
                     <p className="mt-2">{finding.message}</p>
@@ -421,7 +423,7 @@ function ValidationCard({ validation }) {
           ) : null}
         </div>
       ) : (
-        <div className="mt-4 rounded-2xl border border-dashed border-orange-200 bg-orange-50/40 p-4 text-sm leading-6 text-slate-600">
+          <div className="mt-4 rounded-2xl border border-dashed border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/45 p-4 text-sm leading-6 text-[var(--color-text-secondary)]">
           The validation result will appear here after the backend returns the review payload.
         </div>
       )}
@@ -438,7 +440,7 @@ function ValidationStat({ label, value, tone }) {
   return (
     <div className={`rounded-2xl border px-4 py-3 ${toneClasses}`}>
       <p className="text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-inherit/80">{label}</p>
-      <p className="mt-2 text-sm font-semibold text-slate-900">{value}</p>
+      <p className="mt-2 text-sm font-semibold text-[var(--color-text-primary)]">{value}</p>
     </div>
   )
 }

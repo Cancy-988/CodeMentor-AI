@@ -75,7 +75,7 @@ export function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-bg-primary)]/92 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-bg-primary)]/72 backdrop-blur-3xl shadow-[0_12px_40px_rgba(0,0,0,0.08)]">
       <div className="mx-auto max-w-[1600px] px-4 py-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-6">

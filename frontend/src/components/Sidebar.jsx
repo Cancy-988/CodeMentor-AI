@@ -27,7 +27,7 @@ export function Sidebar({ selectedLanguage, onLanguageChange, onUpload, fileName
             id="language-select"
             value={selectedLanguage}
             onChange={(event) => onLanguageChange(event.target.value)}
-            className="w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-primary)]/80 px-4 py-3 text-sm text-[var(--color-text-primary)] outline-none transition duration-300 focus:border-orange-400 focus:ring-2 focus:ring-orange-200/40"
+            className="w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)]/90 px-4 py-3 text-sm font-semibold text-[var(--color-text-primary)] outline-none transition duration-300 focus:border-orange-400 focus:ring-2 focus:ring-orange-200/40"
           >
             {languageOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -41,7 +41,7 @@ export function Sidebar({ selectedLanguage, onLanguageChange, onUpload, fileName
           <label className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-text-secondary)]">
             File Upload
           </label>
-          <label className="flex cursor-pointer items-center justify-center rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-primary)]/80 px-4 py-4 text-sm font-semibold text-[var(--color-text-primary)] transition duration-300 hover:-translate-y-0.5 hover:border-orange-400/40 hover:bg-[var(--color-bg-tertiary)]/90">
+          <label className="flex cursor-pointer items-center justify-center rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)]/90 px-4 py-4 text-sm font-semibold text-[var(--color-text-primary)] transition duration-300 hover:-translate-y-0.5 hover:border-orange-400/40 hover:bg-[var(--color-bg-tertiary)]/90">
             <span>Upload file</span>
             <input className="hidden" type="file" onChange={onUpload} accept=".js,.py,.cpp,.java,image/*" />
           </label>

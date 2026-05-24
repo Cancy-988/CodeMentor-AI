@@ -49,7 +49,7 @@ export function UploadsPage() {
           </div>
 
           {loading ? (
-            <div className="mt-6 rounded-[24px] border border-[var(--color-border-light)] bg-[#0d1222] px-5 py-6 text-sm text-slate-300">
+            <div className="mt-6 rounded-[24px] border border-[var(--color-border-light)] bg-[var(--color-bg-tertiary)]/85 px-5 py-6 text-sm text-[var(--color-text-secondary)]">
               Loading uploads...
             </div>
           ) : null}
@@ -62,11 +62,11 @@ export function UploadsPage() {
 
           <ul className="mt-6 space-y-4">
             {uploads.map((upload) => (
-              <li key={upload.id} className="rounded-[24px] border border-[var(--color-border-light)] bg-[#0d1222] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
+              <li key={upload.id} className="rounded-[24px] border border-[var(--color-border-light)] bg-[var(--color-bg-tertiary)]/85 p-5 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div className="space-y-2">
                     <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="text-lg font-semibold text-white">{upload.file_name}</h3>
+                      <h3 className="text-lg font-semibold text-[var(--color-text-primary)]">{upload.file_name}</h3>
                       <span className="rounded-full border border-orange-400/20 bg-orange-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-orange-200">
                         {upload.mime_type || upload.file_type || 'file'}
                       </span>
@@ -75,20 +75,20 @@ export function UploadsPage() {
                     {upload.file_type === 'image' ? (
                       <div className="mt-3">
                         {upload.extracted_text ? (
-                          <div className="rounded-lg border border-white/6 bg-white/3 p-3 text-sm text-slate-200">
-                            <strong className="text-xs text-slate-300">OCR:</strong>
+                          <div className="rounded-lg border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/55 p-3 text-sm text-[var(--color-text-secondary)]">
+                            <strong className="text-xs text-[var(--color-text-secondary)]">OCR:</strong>
                             <div className="mt-1 max-h-40 overflow-auto whitespace-pre-wrap text-sm">{upload.extracted_text}</div>
                           </div>
                         ) : (
-                          <div className="text-sm text-slate-400">No extracted text available.</div>
+                          <div className="text-sm text-[var(--color-text-tertiary)]">No extracted text available.</div>
                         )}
                       </div>
                     ) : (
-                      <p className="text-sm leading-6 text-slate-300">Uploaded files are kept in the same project-style card layout as reviews and fixes.</p>
+                      <p className="text-sm leading-6 text-[var(--color-text-secondary)]">Uploaded files are kept in the same project-style card layout as reviews and fixes.</p>
                     )}
                   </div>
 
-                  <div className="text-sm text-slate-400">{new Date(upload.created_at).toLocaleString()}</div>
+                  <div className="text-sm text-[var(--color-text-tertiary)]">{new Date(upload.created_at).toLocaleString()}</div>
                 </div>
               </li>
             ))}
