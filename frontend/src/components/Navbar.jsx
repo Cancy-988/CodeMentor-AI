@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { useAuth } from '../context/AuthContext'
+import { useTheme } from '../context/ThemeContext'
 
 function getInitials(name) {
   return name
@@ -14,6 +15,7 @@ function getInitials(name) {
 
 export function Navbar() {
   const { user, signOut } = useAuth()
+  const { theme, toggleTheme } = useTheme()
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef(null)
   const navigate = useNavigate()
@@ -67,13 +69,13 @@ export function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-[#070b14]/95 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-bg-primary)]/95 backdrop-blur-xl">
       <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
         <div className="flex items-center gap-6">
-          <div>
-            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.32em] text-orange-300">CodeMentor AI</p>
-            <p className="mt-1 text-sm text-slate-400">Google-authenticated workspace</p>
-          </div>
+          <Link to="/dashboard" className="flex flex-col gap-0.5">
+            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.32em] text-orange-400">CodeMentor AI</p>
+            <p className="mt-1 text-sm text-[var(--color-text-tertiary)]">Workspace</p>
+          </Link>
 
           <nav className="hidden gap-4 sm:flex">
             {navItems.map((item) => {
@@ -85,8 +87,8 @@ export function Navbar() {
                   to={item.href}
                   className={`rounded-full px-3 py-2 text-sm font-semibold transition ${
                     active
-                      ? 'bg-orange-400/10 text-orange-200 ring-1 ring-orange-400/20'
-                      : 'text-slate-300 hover:bg-white/5 hover:text-white'
+                      ? 'bg-orange-400/10 text-orange-300 ring-1 ring-orange-400/20'
+                      : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-text-primary)]'
                   }`}
                 >
                   {item.label}
@@ -96,40 +98,58 @@ export function Navbar() {
           </nav>
         </div>
 
-        <div className="relative" ref={menuRef}>
+        <div className="flex items-center gap-2">
           <button
-            type="button"
-            onClick={() => setMenuOpen((current) => !current)}
-            className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-3 py-2 shadow-[0_10px_30px_rgba(0,0,0,0.25)] transition hover:-translate-y-0.5 hover:border-orange-400/30"
+            onClick={toggleTheme}
+            className="rounded-full p-2 text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-text-primary)] transition"
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
           >
-            <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-orange-500 to-amber-400 text-sm font-semibold text-white">
-              {avatarUrl ? <img src={avatarUrl} alt={displayName} className="h-full w-full object-cover" /> : getInitials(displayName)}
-            </span>
-            <span className="hidden text-left sm:block">
-              <span className="block text-sm font-semibold text-white">{displayName}</span>
-              <span className="block text-xs text-slate-400">{user?.email}</span>
-            </span>
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-200">Menu</span>
+            {theme === 'dark' ? (
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l-2.12-2.12a4 4 0 00-5.656 0l-2.12 2.12a1 1 0 001.414 1.414l2.12-2.12a2 2 0 012.828 0l2.12 2.12a1 1 0 001.414-1.414zM2.05 13.536A1 1 0 103.464 12.12l2.12 2.12a4 4 0 005.656 0l2.12-2.12a1 1 0 111.414 1.414l-2.12 2.12a2 2 0 01-2.828 0l-2.12-2.12z" clipRule="evenodd" />
+              </svg>
+            ) : (
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+              </svg>
+            )}
           </button>
 
-          {menuOpen ? (
-            <div className="absolute right-0 mt-3 w-64 overflow-hidden rounded-[22px] border border-white/10 bg-[#0d1222] shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
-              <div className="border-b border-white/10 px-4 py-4">
-                <p className="text-sm font-semibold text-white">{displayName}</p>
-                <p className="mt-1 text-xs leading-5 text-slate-400">Signed in with Google through Supabase Auth.</p>
+          <div className="relative" ref={menuRef}>
+            <button
+              type="button"
+              onClick={() => setMenuOpen((current) => !current)}
+              className="flex items-center gap-3 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2 transition hover:border-orange-400/30"
+            >
+              <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-orange-500 to-amber-400 text-sm font-semibold text-white">
+                {avatarUrl ? <img src={avatarUrl} alt={displayName} className="h-full w-full object-cover" /> : getInitials(displayName)}
+              </span>
+              <span className="hidden text-left sm:block">
+                <span className="block text-sm font-semibold text-[var(--color-text-primary)]">{displayName}</span>
+                <span className="block text-xs text-[var(--color-text-tertiary)]">{user?.email}</span>
+              </span>
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-400">Menu</span>
+            </button>
+
+            {menuOpen ? (
+              <div className="absolute right-0 mt-3 w-64 overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] shadow-lg">
+                <div className="border-b border-[var(--color-border)] px-4 py-4">
+                  <p className="text-sm font-semibold text-[var(--color-text-primary)]">{displayName}</p>
+                  <p className="mt-1 text-xs leading-5 text-[var(--color-text-tertiary)]">Signed in with Google through Supabase Auth.</p>
+                </div>
+                <div className="px-2 py-2">
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-semibold text-red-500 transition hover:bg-[var(--color-bg-primary)]"
+                  >
+                    Log out
+                    <span className="text-xs uppercase tracking-[0.18em]">Logout</span>
+                  </button>
+                </div>
               </div>
-              <div className="px-2 py-2">
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="flex w-full items-center justify-between rounded-2xl px-3 py-2 text-left text-sm font-semibold text-slate-300 transition hover:bg-white/5 hover:text-white"
-                >
-                  Log out
-                  <span className="text-xs uppercase tracking-[0.18em] text-orange-300">Logout</span>
-                </button>
-              </div>
-            </div>
-          ) : null}
+            ) : null}
+          </div>
         </div>
       </div>
     </header>
