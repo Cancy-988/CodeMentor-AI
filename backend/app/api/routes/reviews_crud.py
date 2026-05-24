@@ -32,6 +32,7 @@ def list_reviews_route(current_user: AuthUser = Depends(get_current_user), db: S
             "chat_id": r.chat_id,
             "language": getattr(r, "language", None),
             "score": getattr(r, "score", None),
+            "code": getattr(r, "code", None),
             "result_json": getattr(r, "result_json", None),
             "created_at": r.created_at,
         })
@@ -50,6 +51,7 @@ def get_review_route(review_id: int, current_user: AuthUser = Depends(get_curren
         "chat_id": r.chat_id,
         "language": getattr(r, "language", None),
         "score": getattr(r, "score", None),
+        "code": getattr(r, "code", None),
         "result_json": getattr(r, "result_json", None),
         "created_at": r.created_at,
     }
