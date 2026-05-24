@@ -52,26 +52,26 @@ export function ResponsePanel({ review, loading, error, fileName, language, onCo
     : []
 
   return (
-    <aside className="panel-surface flex min-w-0 flex-col gap-4 rounded-[28px] border border-orange-200 bg-white/90 p-4 shadow-[0_24px_80px_rgba(234,88,12,0.08)] backdrop-blur sm:p-5">
-      <div className="rounded-3xl border border-orange-200 bg-orange-50/70 p-5 shadow-[0_10px_30px_rgba(234,88,12,0.06)]">
+    <aside className="panel-surface flex min-w-0 flex-col gap-4 rounded-[28px] border border-white/10 bg-white/5 p-4 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-xl sm:p-5">
+      <div className="rounded-3xl border border-white/10 bg-[#0d1222] p-5 shadow-[0_10px_30px_rgba(0,0,0,0.22)]">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-500">AI response panel</p>
-            <h2 className="mt-2 text-xl font-semibold text-slate-900">Multi-agent review dashboard</h2>
-            <p className="mt-2 text-sm text-slate-600">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-300">AI response panel</p>
+            <h2 className="mt-2 text-xl font-semibold text-white">Multi-agent review dashboard</h2>
+            <p className="mt-2 text-sm text-slate-300">
               Use the tabs to inspect each agent without clutter. The overview keeps the final summary, validation, and report actions together.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full border border-orange-200 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-orange-700 shadow-sm">
+            <span className="rounded-full border border-orange-400/20 bg-orange-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-orange-200 shadow-sm">
               {language}
             </span>
           </div>
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-[28px] border border-orange-200 bg-white shadow-[0_18px_60px_rgba(234,88,12,0.08)]">
-        <div className="flex items-end gap-2 overflow-x-auto border-b border-orange-100 bg-orange-50 px-3 pt-3">
+      <div className="overflow-hidden rounded-[28px] border border-white/10 bg-[#0d1222] shadow-[0_18px_60px_rgba(0,0,0,0.22)]">
+        <div className="flex items-end gap-2 overflow-x-auto border-b border-white/10 bg-white/5 px-3 pt-3">
           {dashboardTabs.length > 0 ? (
             dashboardTabs.map((tab) => (
               <AgentTabButton
@@ -87,7 +87,7 @@ export function ResponsePanel({ review, loading, error, fileName, language, onCo
         </div>
 
         <div className="agent-scroll flex max-h-[820px] flex-col gap-4 overflow-y-auto p-4 pr-1">
-          {error ? <div className="rounded-3xl border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-800">{error}</div> : null}
+          {error ? <div className="rounded-3xl border border-rose-400/20 bg-rose-400/10 p-5 text-sm leading-6 text-rose-100">{error}</div> : null}
 
           {loading ? <LoadingState /> : null}
 
@@ -104,7 +104,7 @@ export function ResponsePanel({ review, loading, error, fileName, language, onCo
           ) : null}
 
           {!loading && !review && !error ? (
-            <div className="rounded-3xl border border-dashed border-orange-200 bg-orange-50/60 p-6 text-sm leading-6 text-slate-600">
+            <div className="rounded-3xl border border-dashed border-white/10 bg-white/5 p-6 text-sm leading-6 text-slate-300">
               Run the analysis to open the multi-agent dashboard below the editor. The tab bar keeps each agent separate and easier to scan.
             </div>
           ) : null}
@@ -124,7 +124,7 @@ function ReviewDashboard({ review, activeTab, language, onCopyCode, typedSummary
               <Pill>{review.language_detection.detected_language}</Pill>
               <Pill tone="muted">Confidence: {review.language_detection.confidence}</Pill>
             </div>
-            <p className="text-sm leading-6 text-slate-700">{review.language_detection.explanation}</p>
+            <p className="text-sm leading-6 text-slate-300">{review.language_detection.explanation}</p>
           </div>
         </AgentCard>
       )
@@ -137,17 +137,17 @@ function ReviewDashboard({ review, activeTab, language, onCopyCode, typedSummary
             <div className="space-y-3">
               {review.bug_detection.issues.length > 0 ? (
                 review.bug_detection.issues.map((issue) => (
-                  <div key={issue.title} className="rounded-2xl border border-orange-100 bg-orange-50/50 p-4">
+                  <div key={issue.title} className="rounded-2xl border border-white/10 bg-white/5 p-4">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-sm font-semibold text-slate-900">{issue.title}</span>
+                      <span className="text-sm font-semibold text-white">{issue.title}</span>
                       <Pill tone="muted">{issue.severity}</Pill>
                     </div>
-                    <p className="mt-2 text-sm leading-6 text-slate-700">{issue.explanation}</p>
-                    <p className="mt-2 text-sm leading-6 text-orange-700">Fix: {issue.fix}</p>
+                    <p className="mt-2 text-sm leading-6 text-slate-300">{issue.explanation}</p>
+                    <p className="mt-2 text-sm leading-6 text-orange-200">Fix: {issue.fix}</p>
                   </div>
                 ))
               ) : (
-                <p className="text-sm leading-6 text-slate-600">No obvious bugs were detected by the agent.</p>
+                <p className="text-sm leading-6 text-slate-400">No obvious bugs were detected by the agent.</p>
               )}
             </div>
           </div>
@@ -158,7 +158,7 @@ function ReviewDashboard({ review, activeTab, language, onCopyCode, typedSummary
       return (
         <AgentCard meta={agentMeta.fix_suggestion}>
           <div className="space-y-4">
-            <p className="text-sm leading-6 text-slate-700">{review.fix_suggestion.recommended_fix}</p>
+            <p className="text-sm leading-6 text-slate-300">{review.fix_suggestion.recommended_fix}</p>
             <div className="flex flex-wrap gap-2">
               {review.fix_suggestion.alternatives.length > 0 ? (
                 review.fix_suggestion.alternatives.map((alternative) => (
@@ -171,13 +171,13 @@ function ReviewDashboard({ review, activeTab, language, onCopyCode, typedSummary
               )}
             </div>
             {review.fix_suggestion.improved_code ? (
-              <div className="overflow-hidden rounded-2xl border border-orange-100 bg-[#fffaf4]">
-                <div className="flex items-center justify-between gap-3 border-b border-orange-100 px-4 py-3">
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Improved code</p>
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/30">
+                <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Improved code</p>
                   <button
                     type="button"
                     onClick={() => onCopyCode(review.fix_suggestion.improved_code)}
-                    className="rounded-full border border-orange-200 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-orange-700 transition duration-300 hover:-translate-y-0.5 hover:border-orange-300 hover:bg-orange-50"
+                    className="rounded-full border border-orange-400/20 bg-orange-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-orange-200 transition duration-300 hover:-translate-y-0.5 hover:border-orange-300 hover:bg-orange-400/15"
                   >
                     Copy code
                   </button>
@@ -185,7 +185,7 @@ function ReviewDashboard({ review, activeTab, language, onCopyCode, typedSummary
                 <SyntaxHighlighter
                   language={syntaxLanguageMap[language] || 'javascript'}
                   style={oneLight}
-                  customStyle={{ margin: 0, background: '#fffaf4', fontSize: '0.84rem', lineHeight: 1.65, padding: '1rem' }}
+                  customStyle={{ margin: 0, background: 'rgba(0,0,0,0.18)', color: '#e2e8f0', fontSize: '0.84rem', lineHeight: 1.65, padding: '1rem' }}
                   showLineNumbers={false}
                   wrapLongLines
                 >
@@ -205,7 +205,7 @@ function ReviewDashboard({ review, activeTab, language, onCopyCode, typedSummary
               <Pill>{review.complexity_analysis.time_complexity}</Pill>
               <Pill tone="muted">{review.complexity_analysis.space_complexity}</Pill>
             </div>
-            <p className="text-sm leading-6 text-slate-700">{review.complexity_analysis.explanation}</p>
+            <p className="text-sm leading-6 text-slate-300">{review.complexity_analysis.explanation}</p>
           </div>
         </AgentCard>
       )
@@ -214,7 +214,7 @@ function ReviewDashboard({ review, activeTab, language, onCopyCode, typedSummary
       return (
         <AgentCard meta={agentMeta.explanation}>
           <div className="space-y-4">
-            <p className="text-sm leading-6 text-slate-700">{review.explanation.simple_explanation}</p>
+            <p className="text-sm leading-6 text-slate-300">{review.explanation.simple_explanation}</p>
             <div className="flex flex-wrap gap-2">
               {review.explanation.key_takeaways.length > 0 ? (
                 review.explanation.key_takeaways.map((takeaway) => (
@@ -237,11 +237,11 @@ function ReviewDashboard({ review, activeTab, language, onCopyCode, typedSummary
     default:
       return (
         <div className="grid gap-4">
-          <div className="rounded-3xl border border-orange-200 bg-gradient-to-br from-orange-50 to-white p-5 shadow-[0_10px_30px_rgba(234,88,12,0.06)]">
+          <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-orange-500/10 to-white/5 p-5 shadow-[0_10px_30px_rgba(0,0,0,0.22)]">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
-                <p className="text-sm font-semibold text-slate-900">Final summary</p>
-                <p className="mt-2 text-sm leading-6 text-slate-700">
+                <p className="text-sm font-semibold text-white">Final summary</p>
+                <p className="mt-2 text-sm leading-6 text-slate-300">
                   {typedSummary}
                   {typedSummary && typedSummary !== review.final_summary ? <span className="typing-caret">|</span> : null}
                 </p>
@@ -262,7 +262,7 @@ function ReviewDashboard({ review, activeTab, language, onCopyCode, typedSummary
             <button
               type="button"
               onClick={onDownloadReport}
-              className="rounded-full border border-orange-300 bg-orange-500 px-4 py-2 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(249,115,22,0.16)] transition duration-300 hover:-translate-y-0.5 hover:border-orange-400 hover:bg-orange-600"
+              className="rounded-full border border-orange-400/30 bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(249,115,22,0.18)] transition duration-300 hover:-translate-y-0.5 hover:from-orange-400 hover:to-amber-300"
             >
               Download report
             </button>
@@ -279,8 +279,8 @@ function AgentTabButton({ label, active, onClick }) {
       onClick={onClick}
       className={`shrink-0 border px-4 py-2 text-sm font-semibold transition duration-300 ${
         active
-          ? 'rounded-t-2xl border-orange-200 border-b-white bg-white text-orange-700 shadow-[0_-8px_20px_rgba(249,115,22,0.08)]'
-          : 'rounded-t-2xl rounded-b-none border-orange-100 border-b-transparent bg-orange-50 text-slate-600 hover:-translate-y-0.5 hover:border-orange-300 hover:bg-orange-100 hover:text-orange-700'
+          ? 'rounded-t-2xl border-white/10 border-b-[#0d1222] bg-[#0d1222] text-orange-200 shadow-[0_-8px_20px_rgba(0,0,0,0.2)]'
+          : 'rounded-t-2xl rounded-b-none border-white/10 border-b-transparent bg-white/5 text-slate-300 hover:-translate-y-0.5 hover:border-orange-300/40 hover:bg-white/10 hover:text-orange-200'
       }`}
     >
       {label}
@@ -291,27 +291,27 @@ function AgentTabButton({ label, active, onClick }) {
 function LoadingState() {
   return (
     <div className="grid gap-4">
-      <div className="rounded-3xl border border-orange-200 bg-orange-50 p-5">
+      <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-orange-200 bg-white">
-            <span className="h-5 w-5 animate-spin rounded-full border-2 border-orange-200 border-t-orange-500" />
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-orange-400/20 bg-orange-400/10">
+            <span className="h-5 w-5 animate-spin rounded-full border-2 border-orange-200 border-t-orange-400" />
           </div>
           <div>
-            <p className="text-sm font-semibold text-slate-900">Running multi-agent analysis</p>
-            <p className="mt-1 text-sm text-slate-600">Generating language detection, bug analysis, fixes, complexity, and explanation.</p>
+            <p className="text-sm font-semibold text-white">Running multi-agent analysis</p>
+            <p className="mt-1 text-sm text-slate-300">Generating language detection, bug analysis, fixes, complexity, and explanation.</p>
           </div>
         </div>
-        <div className="mt-5 h-1 overflow-hidden rounded-full bg-white">
+        <div className="mt-5 h-1 overflow-hidden rounded-full bg-white/10">
           <div className="loading-bar h-full w-1/2 rounded-full bg-gradient-to-r from-orange-400 via-amber-300 to-orange-500" />
         </div>
       </div>
 
       {Array.from({ length: 5 }).map((_, index) => (
-        <div key={index} className="skeleton-card rounded-3xl border border-orange-100 bg-white p-5">
-          <div className="h-4 w-1/2 rounded-full bg-orange-100" />
-          <div className="mt-4 h-3 w-3/4 rounded-full bg-orange-100" />
-          <div className="mt-3 h-3 w-full rounded-full bg-orange-100" />
-          <div className="mt-3 h-3 w-5/6 rounded-full bg-orange-100" />
+        <div key={index} className="skeleton-card rounded-3xl border border-white/10 bg-white/5 p-5">
+          <div className="h-4 w-1/2 rounded-full bg-white/10" />
+          <div className="mt-4 h-3 w-3/4 rounded-full bg-white/10" />
+          <div className="mt-3 h-3 w-full rounded-full bg-white/10" />
+          <div className="mt-3 h-3 w-5/6 rounded-full bg-white/10" />
         </div>
       ))}
     </div>
@@ -320,14 +320,14 @@ function LoadingState() {
 
 function AgentCard({ meta, children }) {
   return (
-    <section className={`panel-card rounded-3xl border ${meta.border} bg-white p-5 shadow-[0_18px_60px_rgba(234,88,12,0.06)]`}>
+    <section className={`panel-card rounded-3xl border ${meta.border} bg-white/5 p-5 shadow-[0_18px_60px_rgba(0,0,0,0.2)]`}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           <div className={`flex h-10 w-10 items-center justify-center rounded-2xl border ${meta.border} ${meta.chip} text-sm font-bold`}>
             {meta.icon}
           </div>
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-900">{meta.label}</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white">{meta.label}</h3>
             <p className={`mt-1 text-xs font-medium uppercase tracking-[0.2em] ${meta.accent}`}>Agent result</p>
           </div>
         </div>

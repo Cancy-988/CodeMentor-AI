@@ -3,6 +3,11 @@ uvicorn==0.34.0
 google-generativeai==0.8.5
 python-dotenv==1.0.1
 python-multipart==0.0.20
+email-validator
+PyJWT==2.10.1
+SQLAlchemy==2.0.49
+psycopg[binary]==3.3.4
+supabase>=2.0.0
 langchain
 langchain-chroma
 langchain-google-genai

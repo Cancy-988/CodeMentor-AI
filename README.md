@@ -57,6 +57,18 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
+## Deployment Baseline
+
+- Frontend: deploy the `frontend/` folder on Vercel.
+- Backend: deploy the `backend/` folder on Render.
+- Supabase: run `supabase/setup.sql` in the SQL editor to create tables, RLS policies, and storage buckets.
+
+New API endpoints (backend)
+
+- `POST /api/projects` - create a project (authenticated)
+- `PATCH /api/projects/{project_id}` - update a project (authenticated)
+- `POST /api/fixes` - submit code for a suggested fix and persist it (authenticated)
+
 ## Dependencies
 
 ### Frontend
