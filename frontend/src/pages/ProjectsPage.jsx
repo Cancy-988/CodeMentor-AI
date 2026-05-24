@@ -290,7 +290,7 @@ export function ProjectsPage() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#070b14] text-slate-100">
+    <main className="relative min-h-screen overflow-hidden bg-[var(--color-bg-primary)] text-[var(--color-text-primary)]">
       <Navbar />
 
       <div className="pointer-events-none absolute inset-0">
@@ -323,8 +323,8 @@ export function ProjectsPage() {
           <br></br>
         </section>
 
-        <section className="animate-[fadeInUp_0.75s_ease-out] rounded-[32px] border border-white/10 bg-white/5 p-4 shadow-[0_30px_100px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-6">
-          <div className="rounded-[28px] border border-white/10 bg-[#0d1222] p-6 sm:p-8">
+        <section className="animate-[fadeInUp_0.75s_ease-out] rounded-[32px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)]/88 p-4 shadow-[0_30px_100px_rgba(0,0,0,0.2)] backdrop-blur-xl sm:p-6">
+          <div className="rounded-[28px] border border-[var(--color-border-light)] bg-[var(--color-bg-tertiary)]/80 p-6 sm:p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-300">New Project</p>
             <h2 className="mt-3 text-2xl font-semibold text-white">Create and upload</h2>
             <p className="mt-2 text-sm leading-6 text-slate-300">
@@ -471,7 +471,7 @@ export function ProjectsPage() {
           </div>
         </section>
 
-        <section className="animate-[fadeInUp_0.8s_ease-out] rounded-[32px] border border-white/10 bg-white/5 p-5 shadow-[0_30px_100px_rgba(0,0,0,0.2)] backdrop-blur-xl sm:p-6">
+        <section className="animate-[fadeInUp_0.8s_ease-out] rounded-[32px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)]/88 p-5 shadow-[0_30px_100px_rgba(0,0,0,0.2)] backdrop-blur-xl sm:p-6">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-300">Projects</p>

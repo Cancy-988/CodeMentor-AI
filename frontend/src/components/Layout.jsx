@@ -25,6 +25,7 @@ function AuthNavbar() {
   const { user, signOut } = useAuth()
   const { theme, toggleTheme } = useTheme()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const menuRef = useRef(null)
   const navigate = useNavigate()
   const location = useLocation()
@@ -62,6 +63,11 @@ function AuthNavbar() {
     }
   }, [])
 
+  useEffect(() => {
+    setMenuOpen(false)
+    setMobileNavOpen(false)
+  }, [location.pathname])
+
   const handleLogout = async () => {
     setMenuOpen(false)
     try {
@@ -73,15 +79,16 @@ function AuthNavbar() {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-bg-primary)]/95 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-bg-primary)]/92 backdrop-blur-xl">
+      <div className="mx-auto max-w-[1600px] px-4 py-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-6">
           <Link to="/dashboard" className="flex flex-col gap-0.5">
             <p className="text-[0.65rem] font-semibold uppercase tracking-[0.32em] text-orange-400">CodeMentor AI</p>
             <p className="mt-1 text-sm text-[var(--color-text-tertiary)]">Workspace</p>
           </Link>
 
-          <nav className="hidden gap-4 sm:flex">
+          <nav className="hidden gap-4 md:flex">
             {navItems.map((item) => {
               const active = location.pathname === item.href || location.pathname.startsWith(`${item.href}/`)
 
@@ -104,8 +111,20 @@ function AuthNavbar() {
 
         <div className="flex items-center gap-4">
           <button
+            type="button"
+            onClick={() => setMobileNavOpen((current) => !current)}
+            className="rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-2 text-[var(--color-text-secondary)] transition hover:border-orange-400/30 hover:text-[var(--color-text-primary)] md:hidden"
+            aria-expanded={mobileNavOpen}
+            aria-label="Toggle navigation menu"
+          >
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          <button
             onClick={toggleTheme}
-            className="rounded-full p-2 text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-text-primary)] transition"
+            className="rounded-full p-2 text-[var(--color-text-secondary)] transition hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-text-primary)]"
             title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
           >
             {theme === 'dark' ? (
@@ -121,24 +140,26 @@ function AuthNavbar() {
 
           <div className="relative" ref={menuRef}>
             <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="flex items-center gap-3 rounded-full px-3 py-2 text-sm font-semibold transition hover:bg-[var(--color-bg-secondary)]"
+              type="button"
+              onClick={() => setMenuOpen((current) => !current)}
+              className="flex items-center gap-3 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2 text-sm font-semibold transition hover:border-orange-400/30"
             >
               {avatarUrl ? (
-                <img src={avatarUrl} alt={displayName} className="h-6 w-6 rounded-full" />
+                <img src={avatarUrl} alt={displayName} className="h-7 w-7 rounded-full object-cover" />
               ) : (
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-orange-400 text-xs font-bold text-white">
+                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-orange-400 text-xs font-bold text-white">
                   {getInitials(displayName)}
                 </div>
               )}
-              <span className="hidden sm:inline text-[var(--color-text-secondary)]">{displayName}</span>
+              <span className="hidden text-[var(--color-text-secondary)] sm:inline">{displayName}</span>
             </button>
 
             {menuOpen && (
-              <div className="absolute right-0 top-full mt-2 w-48 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-secondary)] shadow-lg">
+              <div className="absolute right-0 top-full mt-2 w-52 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-2 shadow-lg">
                 <button
+                  type="button"
                   onClick={handleLogout}
-                  className="block w-full px-4 py-2 text-left text-sm text-red-500 hover:bg-[var(--color-bg-tertiary)] rounded-lg"
+                  className="block w-full rounded-xl px-4 py-3 text-left text-sm font-semibold text-red-500 transition hover:bg-[var(--color-bg-tertiary)]"
                 >
                   Sign out
                 </button>
@@ -146,6 +167,31 @@ function AuthNavbar() {
             )}
           </div>
         </div>
+        </div>
+
+        {mobileNavOpen ? (
+          <div className="mt-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3 shadow-[0_18px_60px_rgba(0,0,0,0.18)] md:hidden">
+            <nav className="grid gap-2">
+              {navItems.map((item) => {
+                const active = location.pathname === item.href || location.pathname.startsWith(`${item.href}/`)
+
+                return (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    className={`rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                      active
+                        ? 'bg-orange-400/10 text-orange-300 ring-1 ring-orange-400/20'
+                        : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-tertiary)] hover:text-[var(--color-text-primary)]'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                )
+              })}
+            </nav>
+          </div>
+        ) : null}
       </div>
     </header>
   )
@@ -165,6 +211,7 @@ function PublicNavbar() {
   const { theme, toggleTheme } = useTheme()
   const { isAuthenticated } = useAuth()
   const location = useLocation()
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
 
   const navItems = [
     { href: '/', label: 'Home' },
@@ -174,13 +221,13 @@ function PublicNavbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/80 backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex h-16 items-center justify-between gap-4">
           <Link to="/" className="flex flex-col gap-0">
             <span className="text-lg font-bold text-orange-500">CodeMentor</span>
             <span className="text-xs text-[var(--color-text-tertiary)]">AI Code Review</span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-3">
+          <nav className="hidden items-center gap-3 md:flex">
             {navItems.map((item) => {
               const active = location.pathname === item.href
 
@@ -200,10 +247,22 @@ function PublicNavbar() {
             })}
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setMobileNavOpen((current) => !current)}
+              className="rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-2 text-[var(--color-text-secondary)] transition hover:border-orange-400/30 hover:text-[var(--color-text-primary)] md:hidden"
+              aria-expanded={mobileNavOpen}
+              aria-label="Toggle navigation menu"
+            >
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+
             <button
               onClick={toggleTheme}
-              className="rounded-full p-2 text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-text-primary)] transition"
+              className="rounded-full p-2 text-[var(--color-text-secondary)] transition hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-text-primary)]"
               title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
             >
               {theme === 'dark' ? (
@@ -233,6 +292,44 @@ function PublicNavbar() {
             )}
           </div>
         </div>
+
+        {mobileNavOpen ? (
+          <div className="mt-4 rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg-secondary)] p-3 md:hidden">
+            <nav className="grid gap-2">
+              {navItems.map((item) => {
+                const active = location.pathname === item.href
+
+                return (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    className={`rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                      active
+                        ? 'bg-orange-500/12 text-orange-500 ring-1 ring-orange-500/20'
+                        : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-tertiary)] hover:text-[var(--color-text-primary)]'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                )
+              })}
+              {isAuthenticated ? (
+                <Link to="/dashboard" className="rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white transition hover:bg-orange-600">
+                  Dashboard
+                </Link>
+              ) : (
+                <>
+                  <Link to="/login" className="rounded-xl px-4 py-3 text-sm font-semibold text-[var(--color-text-primary)] transition hover:bg-[var(--color-bg-tertiary)]">
+                    Sign In
+                  </Link>
+                  <Link to="/signup" className="rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white transition hover:bg-orange-600">
+                    Get Started
+                  </Link>
+                </>
+              )}
+            </nav>
+          </div>
+        ) : null}
       </div>
     </header>
   )

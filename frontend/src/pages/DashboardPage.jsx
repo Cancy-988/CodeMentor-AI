@@ -209,7 +209,7 @@ export function DashboardPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#070b14] text-slate-100">
+    <main className="min-h-screen bg-[var(--color-bg-primary)] text-[var(--color-text-primary)]">
       <Navbar />
 
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
@@ -218,7 +218,7 @@ export function DashboardPage() {
         <div className="absolute bottom-0 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-orange-300/10 blur-3xl" />
       </div>
 
-      <div className="relative mx-auto flex min-h-screen max-w-[1600px] flex-col lg:flex-row">
+      <div className="relative mx-auto flex min-h-screen max-w-[1680px] flex-col lg:flex-row">
         <Sidebar
           selectedLanguage={language}
           onLanguageChange={handleLanguageChange}
@@ -227,16 +227,16 @@ export function DashboardPage() {
         />
 
         <section className="flex min-h-screen flex-1 flex-col gap-6 p-4 sm:p-6 lg:p-8">
-          <header className="animate-[fadeInUp_0.55s_ease-out] rounded-[28px] border border-white/10 bg-white/5 px-6 py-5 shadow-[0_20px_80px_rgba(0,0,0,0.28)] backdrop-blur-xl">
+          <header className="animate-[fadeInUp_0.55s_ease-out] rounded-[28px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)]/88 px-6 py-5 shadow-[0_20px_80px_rgba(0,0,0,0.18)] backdrop-blur-xl">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-sm font-medium uppercase tracking-[0.28em] text-orange-300">
                   CodeMentor AI Studio
                 </p>
-                <h1 className="mt-2 text-2xl font-semibold text-white sm:text-3xl">
+                <h1 className="mt-2 text-2xl font-semibold text-[var(--color-text-primary)] sm:text-3xl">
                   Review, fix, and understand code with an AI mentor.
                 </h1>
-                <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300 sm:text-base">
+                <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--color-text-secondary)] sm:text-base">
                   A bright workspace for multi-agent code review, bug detection, and beginner-friendly explanations.
                 </p>
               </div>

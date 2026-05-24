@@ -21,8 +21,8 @@ export function AuthCallbackPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#0b1020] text-slate-200">
-      <div className="rounded-3xl border border-white/10 bg-white/5 px-6 py-5 text-sm text-slate-300 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur">
+    <div className="flex min-h-screen items-center justify-center bg-[var(--color-bg-primary)] text-[var(--color-text-primary)]">
+      <div className="rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)]/90 px-6 py-5 text-sm text-[var(--color-text-secondary)] shadow-[0_24px_80px_rgba(0,0,0,0.22)] backdrop-blur">
         Completing Google sign-in...
       </div>
     </div>

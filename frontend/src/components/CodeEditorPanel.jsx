@@ -1,12 +1,12 @@
 import Editor from '@monaco-editor/react'
 
 const editorThemes = {
-  javascript: 'vs',
-  cpp: 'vs',
-  typescript: 'vs',
-  python: 'vs',
-  jsx: 'vs',
-  java: 'vs'
+  javascript: 'vs-dark',
+  cpp: 'vs-dark',
+  typescript: 'vs-dark',
+  python: 'vs-dark',
+  jsx: 'vs-dark',
+  java: 'vs-dark'
 }
 
 export function CodeEditorPanel({
@@ -20,11 +20,11 @@ export function CodeEditorPanel({
   onCopyCode
 }) {
   return (
-    <section className="panel-surface flex min-w-0 flex-1 flex-col gap-4 rounded-[28px] border border-orange-200 bg-white/90 p-4 shadow-[0_24px_80px_rgba(234,88,12,0.08)] backdrop-blur sm:p-5">
-      <div className="flex flex-col gap-4 rounded-3xl border border-orange-200 bg-orange-50/70 p-4 lg:flex-row lg:items-center lg:justify-between">
+    <section className="panel-surface flex min-w-0 flex-1 flex-col gap-4 rounded-[28px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)]/92 p-4 shadow-[0_24px_80px_rgba(0,0,0,0.22)] backdrop-blur sm:p-5">
+      <div className="flex flex-col gap-4 rounded-3xl border border-[var(--color-border-light)] bg-[var(--color-bg-tertiary)]/80 p-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-slate-900">Monaco Code Editor</h2>
-          <p className="mt-1 text-sm text-slate-600">Edit code directly in the browser before running the multi-agent review.</p>
+          <h2 className="text-lg font-semibold text-[var(--color-text-primary)]">Monaco Code Editor</h2>
+          <p className="mt-1 text-sm text-[var(--color-text-secondary)]">Edit code directly in the browser before running the multi-agent review.</p>
         </div>
 
         <div className="flex flex-wrap gap-3">
@@ -53,15 +53,15 @@ export function CodeEditorPanel({
 
       <div className="grid gap-3 md:grid-cols-[1fr_auto] md:items-center">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Current file</p>
-          <p className="mt-1 text-sm text-slate-700">{selectedLanguage} snippet ready for analysis</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-text-tertiary)]">Current file</p>
+          <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{selectedLanguage} snippet ready for analysis</p>
         </div>
-        <div className="inline-flex items-center rounded-full border border-orange-200 bg-orange-50 px-3 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-orange-700">
+        <div className="inline-flex items-center rounded-full border border-orange-400/20 bg-orange-400/10 px-3 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-orange-200">
           {language}
         </div>
       </div>
 
-      <div className="min-h-[520px] overflow-hidden rounded-[24px] border border-orange-200 bg-white transition duration-300 focus-within:border-orange-400">
+      <div className="min-h-[520px] overflow-hidden rounded-[24px] border border-[var(--color-border)] bg-[#0b1220] transition duration-300 focus-within:border-orange-400">
         <Editor
           height="100%"
           language={language}

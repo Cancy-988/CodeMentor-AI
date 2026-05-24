@@ -24,7 +24,7 @@ export function FixesPage() {
   }, [])
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#070b14] text-slate-100">
+    <main className="relative min-h-screen overflow-hidden bg-[var(--color-bg-primary)] text-[var(--color-text-primary)]">
       <Navbar />
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -left-20 top-[-8rem] h-96 w-96 rounded-full bg-orange-500/20 blur-3xl" />
@@ -33,7 +33,7 @@ export function FixesPage() {
       </div>
 
       <div className="relative mx-auto max-w-[1440px] px-4 py-8 sm:px-6 lg:px-10">
-        <section className="rounded-[32px] border border-white/10 bg-white/5 p-5 shadow-[0_30px_100px_rgba(0,0,0,0.2)] backdrop-blur-xl sm:p-6">
+        <section className="rounded-[32px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)]/88 p-5 shadow-[0_30px_100px_rgba(0,0,0,0.18)] backdrop-blur-xl sm:p-6">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-300">Fixes</p>
