@@ -41,7 +41,7 @@ export function Sidebar({ selectedLanguage, onLanguageChange, onUpload, fileName
           <label className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-text-secondary)]">
             File Upload
           </label>
-          <label className="flex cursor-pointer items-center justify-center rounded-2xl border border-dashed border-orange-300/40 bg-gradient-to-r from-orange-500/10 to-amber-400/10 px-4 py-4 text-sm font-medium text-orange-100 transition duration-300 hover:-translate-y-0.5 hover:border-orange-300 hover:from-orange-500/15 hover:to-amber-400/15">
+          <label className="flex cursor-pointer items-center justify-center rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-primary)]/80 px-4 py-4 text-sm font-semibold text-[var(--color-text-primary)] transition duration-300 hover:-translate-y-0.5 hover:border-orange-400/40 hover:bg-[var(--color-bg-tertiary)]/90">
             <span>Upload file</span>
             <input className="hidden" type="file" onChange={onUpload} accept=".js,.py,.cpp,.java,image/*" />
           </label>
@@ -51,7 +51,7 @@ export function Sidebar({ selectedLanguage, onLanguageChange, onUpload, fileName
         <div className="mt-auto rounded-3xl border border-[var(--color-border-light)] bg-[var(--color-bg-tertiary)]/80 p-4">
           <div className="flex items-center justify-between text-sm text-[var(--color-text-secondary)]">
             <span>Backend</span>
-            <span className="rounded-full border border-orange-400/20 bg-orange-400/10 px-3 py-1 text-orange-200">FastAPI</span>
+            <span className="rounded-full border border-orange-400/20 bg-orange-400/10 px-3 py-1 text-orange-700 dark:text-orange-200">FastAPI</span>
           </div>
           <p className="mt-3 text-sm leading-6 text-[var(--color-text-secondary)]">
             Gemini responses are sent through the API layer so the frontend stays lightweight and easy to follow.

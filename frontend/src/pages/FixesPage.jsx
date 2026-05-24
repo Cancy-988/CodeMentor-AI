@@ -37,31 +37,31 @@ export function FixesPage() {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-300">Fixes</p>
-              <h1 className="mt-2 text-2xl font-semibold text-white sm:text-3xl">Saved fix suggestions</h1>
-              <p className="mt-2 text-sm leading-6 text-slate-300">
+              <h1 className="mt-2 text-2xl font-semibold text-[var(--color-text-primary)] sm:text-3xl">Saved fix suggestions</h1>
+              <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">
                 Fix records are displayed in the same project-style cards for a consistent workspace.
               </p>
             </div>
-            <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300">
+            <div className="rounded-full border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/50 px-4 py-2 text-sm text-[var(--color-text-secondary)]">
               {loading ? 'Loading...' : `${fixes.length} saved`}
             </div>
           </div>
 
           {loading ? (
-            <div className="mt-6 rounded-[24px] border border-white/10 bg-[#0d1222] px-5 py-6 text-sm text-slate-300">
+            <div className="mt-6 rounded-[24px] border border-[var(--color-border-light)] bg-[#0d1222] px-5 py-6 text-sm text-slate-300">
               Loading fixes...
             </div>
           ) : null}
 
           {!loading && fixes.length === 0 ? (
-            <div className="mt-6 rounded-[24px] border border-dashed border-white/10 bg-white/5 p-6 text-sm leading-6 text-slate-300">
+            <div className="mt-6 rounded-[24px] border border-dashed border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/50 p-6 text-sm leading-6 text-[var(--color-text-secondary)]">
               No fixes yet. Run a workspace analysis to create one.
             </div>
           ) : null}
 
           <ul className="mt-6 space-y-4">
             {fixes.map((fix) => (
-              <li key={fix.id} className="rounded-[24px] border border-white/10 bg-[#0d1222] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
+              <li key={fix.id} className="rounded-[24px] border border-[var(--color-border-light)] bg-[#0d1222] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div className="space-y-2">
                     <div className="flex flex-wrap items-center gap-2">

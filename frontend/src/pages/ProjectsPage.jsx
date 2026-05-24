@@ -306,10 +306,10 @@ export function ProjectsPage() {
           </div>
 
           <div className="max-w-3xl space-y-4">
-            <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+            <h1 className="text-4xl font-semibold tracking-tight text-[var(--color-text-primary)] sm:text-5xl">
               Upload a project folder, keep it organized, and review it from one place.
             </h1>
-            <p className="max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
+            <p className="max-w-2xl text-base leading-7 text-[var(--color-text-secondary)] sm:text-lg">
               Add your source files, create a project record, and keep the project list ready for future reviews, fixes, and uploads.
             </p>
           </div>
@@ -326,8 +326,8 @@ export function ProjectsPage() {
         <section className="animate-[fadeInUp_0.75s_ease-out] rounded-[32px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)]/88 p-4 shadow-[0_30px_100px_rgba(0,0,0,0.2)] backdrop-blur-xl sm:p-6">
           <div className="rounded-[28px] border border-[var(--color-border-light)] bg-[var(--color-bg-tertiary)]/80 p-6 sm:p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-300">New Project</p>
-            <h2 className="mt-3 text-2xl font-semibold text-white">Create and upload</h2>
-            <p className="mt-2 text-sm leading-6 text-slate-300">
+              <h2 className="mt-3 text-2xl font-semibold text-[var(--color-text-primary)]">Create and upload</h2>
+            <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">
               Upload a project folder, fill in the details, and save it as a project.
             </p>
 
@@ -345,7 +345,7 @@ export function ProjectsPage() {
 
             <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
               <div className="space-y-2">
-                <label className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-300" htmlFor="project-name">
+                <label className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-text-secondary)]" htmlFor="project-name">
                   Project name
                 </label>
                 <input
@@ -358,7 +358,7 @@ export function ProjectsPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-300" htmlFor="project-description">
+                <label className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-text-secondary)]" htmlFor="project-description">
                   Description
                 </label>
                 <textarea
@@ -373,7 +373,7 @@ export function ProjectsPage() {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-300" htmlFor="project-language">
+                  <label className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-text-secondary)]" htmlFor="project-language">
                     Language
                   </label>
                   <select
@@ -391,7 +391,7 @@ export function ProjectsPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-300" htmlFor="project-framework">
+                  <label className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-text-secondary)]" htmlFor="project-framework">
                     Framework
                   </label>
                   <input
@@ -405,7 +405,7 @@ export function ProjectsPage() {
               </div>
 
               <div className="space-y-3">
-                <label className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-300">Upload project folder</label>
+                <label className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-text-secondary)]">Upload project folder</label>
                 <label className="flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-dashed border-orange-300/40 bg-gradient-to-r from-orange-500/10 to-amber-400/10 px-4 py-4 text-sm font-medium text-orange-100 transition duration-300 hover:-translate-y-0.5 hover:border-orange-300 hover:from-orange-500/15 hover:to-amber-400/15">
                   <span>{selectionLabel}</span>
                   <span className="rounded-full border border-orange-300/30 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-orange-200">
@@ -413,7 +413,7 @@ export function ProjectsPage() {
                   </span>
                   <input className="hidden" type="file" accept=".js,.py,.cpp,.java" multiple webkitdirectory="true" onChange={handleUploadChange} />
                 </label>
-                <p className="text-xs leading-6 text-slate-400">
+                <p className="text-xs leading-6 text-[var(--color-text-tertiary)]">
                   Choose a folder to upload its code files together. Supported uploads are .js, .py, .cpp, and .java files. The first matching source file is used for the review.
                 </p>
               </div>
@@ -427,7 +427,7 @@ export function ProjectsPage() {
                 {submitting ? 'Saving project...' : 'Upload folder and create project'}
               </button>
 
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm leading-6 text-slate-300">
+              <div className="rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/50 p-4 text-sm leading-6 text-[var(--color-text-secondary)]">
                 After saving, the project card appears below with a live timestamp so you can track recent work.
               </div>
             </form>
@@ -443,7 +443,7 @@ export function ProjectsPage() {
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-300">Multi-agent review</p>
-                    <h3 className="mt-2 text-lg font-semibold text-white">Suggested fix and analysis</h3>
+                    <h3 className="mt-2 text-lg font-semibold text-[var(--color-text-primary)]">Suggested fix and analysis</h3>
                   </div>
                   <span className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] ${review.validation?.passed ? 'border-emerald-400/20 bg-emerald-400/10 text-emerald-100' : 'border-amber-400/20 bg-amber-400/10 text-amber-100'}`}>
                     {review.validation?.passed ? 'Validation passed' : 'Validation needs attention'}
@@ -475,18 +475,18 @@ export function ProjectsPage() {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-300">Projects</p>
-              <h3 className="mt-2 text-xl font-semibold text-white">Your project list</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-300">
+              <h3 className="mt-2 text-xl font-semibold text-[var(--color-text-primary)]">Your project list</h3>
+              <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">
                 If the list is empty, use the upload form above to add your first project.
               </p>
             </div>
-            <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300">
+            <div className="rounded-full border border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/50 px-4 py-2 text-sm text-[var(--color-text-secondary)]">
               {loading ? 'Syncing projects...' : `${projects.length} saved`}
             </div>
           </div>
 
           {loading ? (
-            <div className="mt-6 rounded-[24px] border border-white/10 bg-[#0d1222] px-5 py-6 text-sm text-slate-300">
+            <div className="mt-6 rounded-[24px] border border-[var(--color-border-light)] bg-[#0d1222] px-5 py-6 text-sm text-slate-300">
               Loading projects...
             </div>
           ) : null}
@@ -500,7 +500,7 @@ export function ProjectsPage() {
 
           <ul className="mt-6 space-y-4">
             {projects.map((project) => (
-              <li key={project.id} className="rounded-[24px] border border-white/10 bg-[#0d1222] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
+              <li key={project.id} className="rounded-[24px] border border-[var(--color-border-light)] bg-[#0d1222] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div className="space-y-2">
                     <div className="flex flex-wrap items-center gap-2">
@@ -527,9 +527,9 @@ export function ProjectsPage() {
 
 function FeatureCard({ title, description }) {
   return (
-    <div className="rounded-[24px] border border-white/10 bg-white/5 p-5 shadow-[0_18px_60px_rgba(0,0,0,0.2)] backdrop-blur">
-      <p className="text-sm font-semibold text-white">{title}</p>
-      <p className="mt-2 text-sm leading-6 text-slate-300">{description}</p>
+    <div className="rounded-[24px] border border-[var(--color-border-light)] bg-[var(--color-bg-secondary)]/70 p-5 shadow-[0_18px_60px_rgba(0,0,0,0.2)] backdrop-blur">
+      <p className="text-sm font-semibold text-[var(--color-text-primary)]">{title}</p>
+      <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">{description}</p>
     </div>
   )
 }
