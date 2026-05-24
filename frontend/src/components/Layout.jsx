@@ -164,6 +164,12 @@ export function PublicLayout({ children }) {
 function PublicNavbar() {
   const { theme, toggleTheme } = useTheme()
   const { isAuthenticated } = useAuth()
+  const location = useLocation()
+
+  const navItems = [
+    { href: '/', label: 'Home' },
+    { href: '/about', label: 'About' },
+  ]
 
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--color-border-light)] bg-[var(--color-bg-primary)]/80 backdrop-blur-xl">
@@ -174,19 +180,24 @@ function PublicNavbar() {
             <span className="text-xs text-[var(--color-text-tertiary)]">AI Code Review</span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8">
-            <a href="#features" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition">
-              Features
-            </a>
-            <a href="#how-it-works" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition">
-              How it Works
-            </a>
-            <a href="#faq" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition">
-              FAQ
-            </a>
-            <Link to="/about" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition">
-              About
-            </Link>
+          <nav className="hidden md:flex items-center gap-3">
+            {navItems.map((item) => {
+              const active = location.pathname === item.href
+
+              return (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                    active
+                      ? 'bg-orange-500/12 text-orange-500 ring-1 ring-orange-500/20'
+                      : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-text-primary)]'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              )
+            })}
           </nav>
 
           <div className="flex items-center gap-4">
