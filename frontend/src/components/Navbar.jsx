@@ -143,16 +143,15 @@ export function Navbar() {
               </span>
               <span className="hidden text-left sm:block">
                 <span className="block text-sm font-semibold text-[var(--color-text-primary)]">{displayName}</span>
-                <span className="block text-xs text-[var(--color-text-tertiary)]">{user?.email}</span>
+                {/* <span className="block text-xs text-[var(--color-text-tertiary)]">{user?.email}</span> */}
               </span>
-              <span className="hidden text-xs font-semibold uppercase tracking-[0.2em] text-orange-400 md:inline">Menu</span>
             </button>
 
             {menuOpen ? (
               <div className="absolute right-0 mt-3 w-64 overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] shadow-lg">
                 <div className="border-b border-[var(--color-border)] px-4 py-4">
                   <p className="text-sm font-semibold text-[var(--color-text-primary)]">{displayName}</p>
-                  <p className="mt-1 text-xs leading-5 text-[var(--color-text-tertiary)]">Signed in with Google through Supabase Auth.</p>
+                  <p className="text-xs text-[var(--color-text-secondary)]">{user?.email}</p>
                 </div>
                 <div className="px-2 py-2">
                   <button
@@ -161,7 +160,7 @@ export function Navbar() {
                     className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-semibold text-red-500 transition hover:bg-[var(--color-bg-primary)]"
                   >
                     Log out
-                    <span className="text-xs uppercase tracking-[0.18em]">Logout</span>
+                    
                   </button>
                 </div>
               </div>
