@@ -14,3 +14,9 @@ langchain-google-genai
 chromadb
 Pillow
 pytesseract
+
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+python-dotenv
