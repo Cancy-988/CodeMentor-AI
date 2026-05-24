@@ -33,6 +33,8 @@ def list_uploads_route(current_user: AuthUser = Depends(get_current_user), db: S
             "file_name": getattr(u, "file_name", None),
             "storage_path": getattr(u, "storage_path", None),
             "mime_type": getattr(u, "mime_type", None),
+            "extracted_text": getattr(u, "extracted_text", None),
+            "file_type": getattr(u, "file_type", None),
             "created_at": u.created_at,
         })
     return results

@@ -122,4 +122,11 @@ def get_optional_current_user(authorization: str | None = Header(default=None)) 
     if not authorization:
         return None
 
-    return get_current_user(authorization)
+    try:
+        return get_current_user(authorization)
+    except HTTPException:
+        # Authorization exists but is invalid; treat as anonymous rather than raising.
+        return None
+    except Exception:
+        # Any unexpected error during auth should not crash the request pipeline for optional checks.
+        return None

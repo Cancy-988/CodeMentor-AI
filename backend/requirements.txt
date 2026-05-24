@@ -12,3 +12,5 @@ langchain
 langchain-chroma
 langchain-google-genai
 chromadb
+Pillow
+pytesseract

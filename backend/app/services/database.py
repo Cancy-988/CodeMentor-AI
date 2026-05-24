@@ -205,18 +205,20 @@ def delete_chat(db: Session, *, chat_id: int):
 
 
 def get_review(db: Session, *, review_id: int):
-    Review = getattr(__import__('app.db.models', fromlist=['Review']), 'Review')
-    return db.query(Review).filter(Review.id == review_id).one_or_none()
+    from app.db.models import CodeReviewRecord
+
+    return db.query(CodeReviewRecord).filter(CodeReviewRecord.id == review_id).one_or_none()
 
 
 def list_reviews(db: Session, *, user_id: int | None = None, chat_id: int | None = None):
-    Review = getattr(__import__('app.db.models', fromlist=['Review']), 'Review')
-    q = db.query(Review)
+    from app.db.models import CodeReviewRecord
+
+    q = db.query(CodeReviewRecord)
     if user_id is not None:
-        q = q.filter(Review.user_id == user_id)
+        q = q.filter(CodeReviewRecord.user_id == user_id)
     if chat_id is not None:
-        q = q.filter(Review.chat_id == chat_id)
-    return q.order_by(Review.created_at.desc()).all()
+        q = q.filter(CodeReviewRecord.chat_id == chat_id)
+    return q.order_by(CodeReviewRecord.created_at.desc()).all()
 
 
 def list_chats(db: Session, *, user_id: int | None = None):
@@ -229,15 +231,17 @@ def list_chats(db: Session, *, user_id: int | None = None):
 
 
 def get_upload(db: Session, *, upload_id: int):
-    Upload = getattr(__import__('app.db.models', fromlist=['Upload']), 'Upload')
-    return db.query(Upload).filter(Upload.id == upload_id).one_or_none()
+    from app.db.models import UploadRecord
+
+    return db.query(UploadRecord).filter(UploadRecord.id == upload_id).one_or_none()
 
 
 def list_uploads(db: Session, *, user_id: int | None = None, chat_id: int | None = None):
-    Upload = getattr(__import__('app.db.models', fromlist=['Upload']), 'Upload')
-    q = db.query(Upload)
+    from app.db.models import UploadRecord
+
+    q = db.query(UploadRecord)
     if user_id is not None:
-        q = q.filter(Upload.user_id == user_id)
+        q = q.filter(UploadRecord.user_id == user_id)
     if chat_id is not None:
-        q = q.filter(Upload.chat_id == chat_id)
-    return q.order_by(Upload.created_at.desc()).all()
+        q = q.filter(UploadRecord.chat_id == chat_id)
+    return q.order_by(UploadRecord.created_at.desc()).all()

@@ -1,11 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.core.auth import get_current_user
+import logging
+
+from app.core.auth import get_current_user, get_optional_current_user
 from app.db.session import get_db
 from app.schemas.auth import AuthUser
-from app.schemas.history import ChatSummaryResponse, MemoryResponse, ReviewHistoryResponse, UploadHistoryResponse, UserProfileResponse
-from app.db.models import ChatThread, CodeReviewRecord, MemoryRecord, UploadRecord, UserAccount
+from app.schemas.history import MemoryResponse, ReviewHistoryResponse, UploadHistoryResponse, UserProfileResponse
+from app.db.models import CodeReviewRecord, MemoryRecord, UploadRecord, UserAccount
 
 router = APIRouter()
 
@@ -18,14 +20,7 @@ def get_profile(current_user: AuthUser = Depends(get_current_user), db: Session 
     return user
 
 
-@router.get("/chats", response_model=list[ChatSummaryResponse])
-def list_chats(current_user: AuthUser = Depends(get_current_user), db: Session = Depends(get_db)):
-    user = db.query(UserAccount).filter(UserAccount.supabase_user_id == current_user.id).one_or_none()
-    if user is None:
-        return []
-
-    chats = db.query(ChatThread).filter(ChatThread.user_id == user.id).order_by(ChatThread.created_at.desc()).all()
-    return chats
+# Chat listing endpoint removed — chat feature deprecated.
 
 
 @router.get("/reviews", response_model=list[ReviewHistoryResponse])

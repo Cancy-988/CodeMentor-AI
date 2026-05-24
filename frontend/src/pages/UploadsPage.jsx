@@ -68,12 +68,24 @@ export function UploadsPage() {
                     <div className="flex flex-wrap items-center gap-2">
                       <h3 className="text-lg font-semibold text-white">{upload.file_name}</h3>
                       <span className="rounded-full border border-orange-400/20 bg-orange-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-orange-200">
-                        {upload.mime_type || 'file'}
+                        {upload.mime_type || upload.file_type || 'file'}
                       </span>
                     </div>
-                    <p className="text-sm leading-6 text-slate-300">
-                      Uploaded files are kept in the same project-style card layout as reviews and fixes.
-                    </p>
+
+                    {upload.file_type === 'image' ? (
+                      <div className="mt-3">
+                        {upload.extracted_text ? (
+                          <div className="rounded-lg border border-white/6 bg-white/3 p-3 text-sm text-slate-200">
+                            <strong className="text-xs text-slate-300">OCR:</strong>
+                            <div className="mt-1 max-h-40 overflow-auto whitespace-pre-wrap text-sm">{upload.extracted_text}</div>
+                          </div>
+                        ) : (
+                          <div className="text-sm text-slate-400">No extracted text available.</div>
+                        )}
+                      </div>
+                    ) : (
+                      <p className="text-sm leading-6 text-slate-300">Uploaded files are kept in the same project-style card layout as reviews and fixes.</p>
+                    )}
                   </div>
 
                   <div className="text-sm text-slate-400">{new Date(upload.created_at).toLocaleString()}</div>

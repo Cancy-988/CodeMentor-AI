@@ -7,7 +7,7 @@ from app.schemas.auth import AuthUser
 from app.schemas.project import ProjectResponse
 from app.schemas.memory import MemoryUpsert, MemoryResponse
 from app.schemas.fixes import FixSuggestionResponse
-from app.services.database import upsert_user, list_projects, get_project, delete_project, set_memory, list_fixes, audit_log, list_chats
+from app.services.database import upsert_user, list_projects, get_project, delete_project, set_memory, list_fixes, audit_log
 
 router = APIRouter()
 
@@ -66,19 +66,4 @@ def list_user_fixes(current_user: AuthUser = Depends(get_current_user), db: Sess
     return fixes
 
 
-@router.get("/chats")
-def list_user_chats(current_user: AuthUser = Depends(get_current_user), db: Session = Depends(get_db)):
-    user = _resolve_user(db, current_user)
-    chats = list_chats(db, user_id=user.id)
-    results = []
-    for c in chats:
-        results.append({
-            "id": c.id,
-            "title": c.title,
-            "summary": c.summary,
-            "language": c.language,
-            "framework": c.framework,
-            "created_at": c.created_at,
-            "updated_at": c.updated_at,
-        })
-    return results
+# Chat list endpoint removed — chats feature is no longer part of the product.

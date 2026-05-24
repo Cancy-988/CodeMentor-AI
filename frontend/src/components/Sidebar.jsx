@@ -43,7 +43,7 @@ export function Sidebar({ selectedLanguage, onLanguageChange, onUpload, fileName
           </label>
           <label className="flex cursor-pointer items-center justify-center rounded-2xl border border-dashed border-orange-300/40 bg-gradient-to-r from-orange-500/10 to-amber-400/10 px-4 py-4 text-sm font-medium text-orange-100 transition duration-300 hover:-translate-y-0.5 hover:border-orange-300 hover:from-orange-500/15 hover:to-amber-400/15">
             <span>Upload file</span>
-            <input className="hidden" type="file" onChange={onUpload} accept=".js,.py,.cpp,.java" />
+            <input className="hidden" type="file" onChange={onUpload} accept=".js,.py,.cpp,.java,image/*" />
           </label>
           <p className="text-xs text-slate-400">{fileName}</p>
         </div>

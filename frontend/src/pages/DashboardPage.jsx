@@ -96,7 +96,10 @@ export function DashboardPage() {
     const formData = new FormData()
     formData.append('file', file)
 
-    const response = await authFetch('/api/upload-code', {
+    const isImage = file.type && file.type.startsWith('image/')
+    const endpoint = isImage ? '/api/upload-file' : '/api/upload-code'
+
+    const response = await authFetch(endpoint, {
       method: 'POST',
       body: formData,
     })
