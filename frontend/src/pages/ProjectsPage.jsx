@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Navbar } from '../components/Navbar'
 import { authFetch } from '../lib/apiClient'
+import { readJsonResponse } from '../lib/apiClient'
 
 const languageOptions = [
   { value: 'javascript', label: 'JavaScript' },
@@ -101,7 +102,7 @@ export function ProjectsPage() {
         throw new Error(data?.detail || 'Unable to load projects right now.')
       }
 
-      const data = await res.json()
+      const data = await readJsonResponse(res)
       setProjects(Array.isArray(data) ? data : [])
       setPageError('')
     } catch (loadError) {
@@ -121,7 +122,7 @@ export function ProjectsPage() {
       body: formData,
     })
 
-    const data = await response.json().catch(() => ({}))
+    const data = await readJsonResponse(response)
 
     if (!response.ok) {
       throw new Error(data?.detail || 'The project upload failed.')
@@ -152,7 +153,7 @@ export function ProjectsPage() {
       }),
     })
 
-    const data = await response.json().catch(() => ({}))
+    const data = await readJsonResponse(response)
 
     if (!response.ok) {
       throw new Error(data?.detail || 'The multi-agent review failed.')
@@ -181,7 +182,7 @@ export function ProjectsPage() {
       }),
     })
 
-    const data = await response.json().catch(() => ({}))
+    const data = await readJsonResponse(response)
 
     if (!response.ok) {
       throw new Error(data?.detail || 'The project could not be created.')

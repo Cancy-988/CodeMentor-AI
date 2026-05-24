@@ -4,7 +4,7 @@ import { Navbar } from '../components/Navbar'
 import { Sidebar } from '../components/Sidebar'
 import { CodeEditorPanel } from '../components/CodeEditorPanel'
 import { ResponsePanel } from '../components/ResponsePanel'
-import { authFetch } from '../lib/apiClient'
+import { authFetch, readJsonResponse } from '../lib/apiClient'
 
 const starterCodeByLanguage = {
   javascript:
@@ -104,7 +104,7 @@ export function DashboardPage() {
       body: formData,
     })
 
-    const data = await response.json()
+    const data = await readJsonResponse(response)
 
     if (!response.ok) {
       throw new Error(data?.detail || 'The file upload failed.')
@@ -164,7 +164,7 @@ export function DashboardPage() {
         body: JSON.stringify({ language, code: trimmedCode })
       })
 
-      const data = await responsePayload.json()
+      const data = await readJsonResponse(responsePayload)
 
       if (!responsePayload.ok) {
         throw new Error(data?.detail || 'The review request failed.')
@@ -399,9 +399,9 @@ function downloadTextFile(fileName, content) {
 
 function ToastCard({ toast, onDismiss }) {
   const toneClasses = {
-    success: 'border-emerald-400/20 bg-emerald-400/10 text-emerald-100',
-    error: 'border-rose-400/20 bg-rose-400/10 text-rose-100',
-    info: 'border-cyan-400/20 bg-cyan-400/10 text-cyan-100'
+    success: 'border-emerald-300/20 bg-slate-950/95 text-white',
+    error: 'border-rose-300/20 bg-slate-950/95 text-white',
+    info: 'border-cyan-300/20 bg-slate-950/95 text-white'
   }
 
   const toneLabel = {
@@ -414,18 +414,18 @@ function ToastCard({ toast, onDismiss }) {
     <div
       role="status"
       aria-live="polite"
-      className={`animate-[toastIn_0.28s_ease-out] rounded-2xl border px-4 py-3 shadow-[0_20px_60px_rgba(2,6,23,0.45)] backdrop-blur ${toneClasses[toast.tone]}`}
+      className={`animate-[toastIn_0.28s_ease-out] rounded-2xl border px-4 py-3 shadow-[0_24px_70px_rgba(0,0,0,0.6)] backdrop-blur ${toneClasses[toast.tone]}`}
     >
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-[0.65rem] font-semibold uppercase tracking-[0.24em] opacity-80">{toneLabel[toast.tone]}</p>
+          <p className="text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-slate-300">{toneLabel[toast.tone]}</p>
           <p className="mt-1 text-sm font-semibold text-white">{toast.title}</p>
-          {toast.description ? <p className="mt-1 text-sm leading-6 text-slate-200/90">{toast.description}</p> : null}
+          {toast.description ? <p className="mt-1 text-sm leading-6 text-slate-200">{toast.description}</p> : null}
         </div>
         <button
           type="button"
           onClick={() => onDismiss(toast.id)}
-          className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-xs font-semibold text-slate-200 transition hover:bg-white/10"
+          className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-xs font-semibold text-white transition hover:bg-white/10"
         >
           Dismiss
         </button>
